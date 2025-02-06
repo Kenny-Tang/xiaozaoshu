@@ -1,0 +1,16 @@
+[
+  {
+    "name": "服务发布策略",
+    "path": "/application-deploy-strategy",
+		"url": "/articles/ApplicationDeployStrategy.md"
+  },
+	{
+		"name": "研发及上线规范",
+		"path": "/code-and-deploy",
+		"url": "/articles/CodeAndDeploy.md"
+	},{
+		"name": "基于雪花算法的ID生成器",
+		"path": "/snowflake-id-gen",
+		"url": "/articles/SnowflakeId.md"
+	}
+]
