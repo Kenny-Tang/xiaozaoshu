@@ -1,186 +1,100 @@
 <template>
-  <div class="layout-container">
-    <!-- 左侧导航栏 -->
-    <nav :class="['sidebar', { collapsed: isCollapsed }]">
-      <button class="toggle-btn" @click="toggleSidebar" aria-label="Toggle sidebar">
-        <i class="fa" :class="isCollapsed ? 'fa-star' : 'fa-arrow-left'"></i>
-      </button>
-      <!-- <h1 class="title" v-if="!isCollapsed">导航栏</h1> -->
-      <ul v-if="!isCollapsed">
-        <li><RouterLink to="/">Home</RouterLink></li>
-        <li><RouterLink to="/about">Vue Anki</RouterLink></li>
-        <!-- 动态加载菜单项 -->
-        <li v-for="link in links" :key="link.path">
-          <RouterLink :to="link.path">{{ link.name }}</RouterLink>
-        </li>
-      </ul>
-    </nav>
+  <el-container style="height: 100vh;">
+    <!-- 侧边栏 -->
+    <el-aside :width="isCollapsed ? '64px' : '200px'" class="aside">
+      <el-menu :default-active="activeMenu" router :collapse="isCollapsed">
+        <el-menu-item index="/">
+          <el-icon><House /></el-icon>
+          <template #title>首页</template>
+        </el-menu-item>
+        <el-menu-item index="/about">
+          <el-icon><Document /></el-icon>
+          <template #title>Vue Anki</template>
+        </el-menu-item>
+        <el-menu-item v-for="link in links" :key="link.path" :index="link.path">
+          <el-icon v-if="link.icon">
+            <component :is="iconMap[link.icon]"></component>
+          </el-icon>
+          <template #title>{{ link.name }}</template>
+        </el-menu-item>
+      </el-menu>
 
-    <!-- 右侧主内容区域 -->
-    <main class="main-content">
-      <RouterView />
-    </main>
-  </div>
+      <!-- 侧边栏收起/展开按钮 -->
+      <div class="toggle-button" @click="toggleSidebar">
+        <el-icon v-if="isCollapsed"><Expand /></el-icon>
+        <el-icon v-else><Fold /></el-icon>
+      </div>
+    </el-aside>
+
+    <el-container>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
-<script>
-import { RouterLink, RouterView } from 'vue-router';
+<script setup>
+import { ref, onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { Expand, Fold, House, Document } from '@element-plus/icons-vue';
 
-export default {
-  name: "LayoutComponent",
-  data() {
-    return {
-      isCollapsed: false,
-      links: []
-    };
-  },
-  async created() {
-    try {
-      this.links = await import('@/assets/links.json').then(module => module.default);
-    } catch (error) {
-      console.error('Failed to load links:', error);
-    }
-  },
-  methods: {
-    toggleSidebar() {
-      this.isCollapsed = !this.isCollapsed;
-    }
+const links = ref([]);
+const route = useRoute();
+const activeMenu = ref(route.path);
+const isCollapsed = ref(false);
+
+// 创建一个 **图标映射表**
+const iconMap = {};
+Object.keys(ElementPlusIconsVue).forEach((key) => {
+  iconMap[key] = ElementPlusIconsVue[key];
+});
+
+// 监听路由变化，确保菜单高亮
+watch(route, (newRoute) => {
+  activeMenu.value = newRoute.path;
+});
+
+// 加载 JSON 菜单数据并更新路由
+onMounted(async () => {
+  try {
+    const response = await fetch('/links.json'); // ✅ 从 public 目录加载
+    links.value = await response.json();
+  } catch (error) {
+    console.error('Failed to load links:', error);
   }
+});
+
+// 切换侧边栏状态
+const toggleSidebar = () => {
+  isCollapsed.value = !isCollapsed.value;
 };
 </script>
 
-<style>
-:root {
-  --sidebar-bg: #2d3748;
-  --sidebar-text: white;
-  --sidebar-hover: #a0aec0;
-}
-
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.layout-container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  width: 100vw;
-  max-width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-.sidebar {
-  width: 200px;
-  background-color: var(--sidebar-bg);
-  color: var(--sidebar-text);
-  padding: 10px;
-  box-sizing: border-box;
-  transition: width 0.3s ease, padding 0.3s ease;
-  flex-shrink: 0;
+<style scoped>
+.aside {
+  background-color: #2c3e50;
+  color: white;
+  min-height: 100vh;
   position: relative;
+  transition: width 0.3s ease-in-out;
 }
 
-.sidebar.collapsed {
-  width: 60px;
-  padding: 10px 5px;
-}
-
-.sidebar .title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin-bottom: 10px;
-}
-
-.sidebar a {
-  color: var(--sidebar-text);
-  text-decoration: none;
-}
-
-.sidebar a:hover {
-  color: var(--sidebar-hover);
-}
-
-.main-content {
-  flex: 1;
-  background-color: #f7fafc;
-  padding: 20px;
-  overflow: auto;
-  box-sizing: border-box;
-  min-width: 0;
-}
-
-.main-content h2 {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-img {
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-  margin: 0 auto;
-}
-
-.toggle-btn {
-  background-color: var(--sidebar-bg);
-  color: var(--sidebar-text);
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  font-size: 16px;
-  border-radius: 50%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, transform 0.3s;
+.toggle-button {
   position: absolute;
-  top: 10px;
-  right: -20px;
-  z-index: 1;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2d3d;
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.toggle-btn:hover {
-  background-color: #4a5568;
-  transform: translateY(-2px);
-}
-
-.toggle-btn:active {
-  transform: translateY(1px);
-}
-
-.toggle-btn i {
-  margin-right: 0;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    width: 60px;
-  }
-
-  .sidebar.collapsed {
-    width: 40px;
-  }
-
-  .toggle-btn {
-    right: -15px;
-  }
+.toggle-button:hover {
+  background: #409eff;
 }
 </style>

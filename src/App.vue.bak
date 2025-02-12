@@ -1,82 +1,144 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
-  <header>
-    <div class="wrapper">
-
-      <nav>
-        <RouterLink to="/" tag="li">Home</RouterLink>
-        <RouterLink to="/about" tag="li">Vue Anki</RouterLink>
-				<RouterLink to="/application-deploy-strategy" tag="li">服务发布策略</RouterLink>
-      </nav>
+  <div class="layout">
+    <div class="main-container">
+      <aside class="sidebar" :class="{ collapsed: isCollapsed }">
+        <button class="toggle-btn" @click="toggleSidebar">
+          <span v-if="isCollapsed" class="icon">&#9776;</span> <!-- 汉堡菜单图标 -->
+          <span v-else class="icon">&#10006;</span> <!-- 关闭图标 -->
+        </button>
+        <nav v-show="!isCollapsed">
+          <ul>
+            <li><RouterLink to="/">Home</RouterLink></li>
+            <li><RouterLink to="/about">Vue Anki</RouterLink></li>
+            <li v-for="link in links" :key="link.path">
+              <RouterLink :to="link.path">{{ link.name }}</RouterLink>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <RouterView />
+      </main>
     </div>
-  </header>
-
-  <RouterView />
+    <footer class="footer">Footer</footer>
+  </div>
 </template>
 
+<script>
+import { RouterLink, RouterView } from 'vue-router';
+
+export default {
+  name: "LayoutComponent",
+  data() {
+    return {
+      isCollapsed: true,
+      links: []
+    };
+  },
+  async created() {
+    try {
+      this.links = await import('@/assets/links.json').then(module => module.default);
+    } catch (error) {
+      console.error('Failed to load links:', error);
+    }
+  },
+  methods: {
+    toggleSidebar() {
+      this.isCollapsed = !this.isCollapsed;
+    }
+  }
+};
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  margin: 0 auto;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
+.header,
+.footer {
+  background: #333;
+  color: white;
   text-align: center;
-  margin-top: 2rem;
+  padding: 10px;
+  width: 100%;
+}
+.main-container {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+}
+.sidebar {
+  width: 250px;
+  background: #f4f4f4;
+  padding: 10px;
+  position: relative;
+  transition: width 0.3s ease;
+}
+.sidebar.collapsed {
+  width: 40px;
+  padding: 10px 5px;
+}
+.sidebar.collapsed nav {
+  display: none;
+}
+.toggle-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 18px;
+}
+.icon {
+  color: #333;
+  font-size: 22px;
+}
+.sidebar.collapsed .icon {
+  color: #f4f4f4;
+}
+.toggle-btn:hover .icon {
+  color: #777;
+}
+.content {
+  flex: 1;
+  padding: 10px;
+  background: #fff;
+  min-width: 0;
+}
+.footer {
+  background: #222;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: left;
-    padding-right: calc(var(--section-gap) / 2);
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
+  .sidebar {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  .sidebar.collapsed {
+    transform: translateX(0);
+    width: 250px;
   }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+  .toggle-btn {
+    top: 10px;
+    left: 10px;
   }
 }
 </style>

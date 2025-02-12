@@ -35,7 +35,7 @@ export default {
 	methods: {
 		async loadMarkdown() {
 			try {
-				console.log(this.url+" s")
+				// console.log(this.url+" s")
 				let responseA = await axios.get(this.url); // 从 public 目录加载
 				this.markdownContent = await responseA.data;
 			} catch (error) {

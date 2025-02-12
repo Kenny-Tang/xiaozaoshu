@@ -1,12 +1,13 @@
-import './assets/main.css'
+import { createApp } from 'vue';
+import App from './App.vue';
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+import router, { loadDynamicRoutes } from './router'; // 确保引入 loadDynamicRoutes()
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+const app = createApp(App);
 
-const app = createApp(App)
-
-
-app.use(router)
-
-app.mount('#app')
+loadDynamicRoutes().then(() => { // 🔹 确保加载完动态路由后再挂载应用
+  app.use(router);
+  app.use(ElementPlus);
+  app.mount('#app');
+});

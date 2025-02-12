@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     innerHtml() {
-			console.log(this.content)
+			// console.log(this.content)
       return this.md.render(this.content);
     }
   },

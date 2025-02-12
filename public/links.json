@@ -1,0 +1,49 @@
+[
+  {
+	  "name": "服务发布策略",
+	  "path": "/articles/application-deploy-strategy",
+	  "url": "/articles/SnowflakeId.md",
+	  "icon": "Document"
+  },
+	{
+		"name": "研发及上线规范",
+		"path": "/articles/code-and-deploy",
+		"url": "/articles/CodeAndDeploy.md",
+		"icon": "Document"
+	},{
+		"name": "基于雪花算法的ID生成器",
+		"path": "/articles/snowflake-id-gen",
+		"url": "/articles/SnowflakeId.md",
+	"icon": "Document"
+	}, {
+		"name": "Maven 常用命令",
+		"path": "/articles/maven-common-command",
+		"url": "/articles/MavenCommonCommand.md",
+	"icon": "Document"
+	},{
+		"name": "Maven 分不同的环境打包不同目录下的配置文件",
+		"path": "/articles/maven-separate-env-profile",
+		"url": "/articles/MavenSeparateEnvProfile.md",
+	"icon": "Document"
+	},{
+		"name": "消息队列（MQ）中间件选型比较",
+		"path": "/articles/mq-compare",
+		"url": "/articles/MQ.md",
+	"icon": "Document"
+	},{
+		"name": "ElasticSearchStack 安装于使用",
+		"path": "/articles/es-stack-install",
+		"url": "/articles/ElasticStack.md",
+	"icon": "Document"
+	},{
+		"name": "MySQL集群",
+		"path": "/articles/mysql-cluster",
+		"url": "/articles/MySQL集群.md",
+	"icon": "Document"
+	},{
+		"name": "Postman 使用",
+		"path": "/articles/postman",
+		"url": "/articles/Postman.md",
+	"icon": "Document"
+	}
+]
