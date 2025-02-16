@@ -1,7 +1,7 @@
 <template>
   <el-container style="height: 100vh;">
     <!-- 侧边栏 -->
-    <el-aside :width="isCollapsed ? '64px' : '200px'" class="aside">
+    <el-aside :width="isCollapsed ? '0px' : '200px'" class="aside">
       <el-menu :default-active="activeMenu" router :collapse="isCollapsed">
         <el-menu-item index="/">
           <el-icon><House /></el-icon>
@@ -18,13 +18,13 @@
           <template #title>{{ link.name }}</template>
         </el-menu-item>
       </el-menu>
-
-      <!-- 侧边栏收起/展开按钮 -->
-      <div class="toggle-button" @click="toggleSidebar">
-        <el-icon v-if="isCollapsed"><Expand /></el-icon>
-        <el-icon v-else><Fold /></el-icon>
-      </div>
     </el-aside>
+
+    <!-- 侧边栏收起/展开按钮 -->
+    <div class="toggle-button" @click="toggleSidebar">
+      <el-icon v-if="isCollapsed"><Expand /></el-icon>
+      <el-icon v-else><Fold /></el-icon>
+    </div>
 
     <el-container>
       <el-main>
@@ -82,19 +82,24 @@ const toggleSidebar = () => {
 }
 
 .toggle-button {
-  position: absolute;
-  bottom: 10px;
+  position: fixed;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background: #1f2d3d;
   color: white;
-  padding: 8px;
+  padding: 12px;
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.3s;
+  z-index: 1000;
 }
 
 .toggle-button:hover {
   background: #409eff;
+}
+
+.toggle-button el-icon {
+  font-size: 24px;
 }
 </style>

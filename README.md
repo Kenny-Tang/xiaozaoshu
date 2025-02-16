@@ -6,7 +6,7 @@
 
 markdown 文章存放路径 `public/articles/`
 
-写好后在 `src/assets/links.json` 配置对应的文章显示
+写好后在 `public/links.json` 配置对应的文章显示
 
 "name" : 左侧目录的显示名称
 
@@ -15,9 +15,10 @@ markdown 文章存放路径 `public/articles/`
 "url" : markdown 文件的存放位置，会被读取后在页面中显示
 
 ```json
-{
-  "name": "左侧目录的显示名称",
-  "path": "/application-deploy-strategy",
-	"url": "/articles/ApplicationDeployStrategy.md"
-}
+  {
+	  "name": "服务发布策略",
+	  "path": "/articles/application-deploy-strategy",
+	  "url": "/articles/SnowflakeId.md",
+	  "icon": "Document"
+  }
 ```
