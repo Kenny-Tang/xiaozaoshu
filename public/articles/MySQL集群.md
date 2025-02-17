@@ -2,7 +2,7 @@
 # MySQL 中的集群部署方案
 ## MySQL Replication
 `MySQL Replication` 是官方提供的主从同步方案，用于将一个 MySQL 的实例同步到另一个实例中。Replication 为保证数据安全做了重要的保证，是目前运用最广的 MySQL 容灾方案。Replication 用两个或以上的实例搭建了 MySQL 主从复制集群，提供单点写入，多点读取的服务，实现了读的 `scale out`。
-![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/091843da22e7473488a3d40aae088e9e.png)
+![在这里插入图片描述](../images/091843da22e7473488a3d40aae088e9e.png)
 上面的栗子，一个主库(M)，三个从库(S)，通过 replication，Master 生成 event 的 binlog，然后发给 slave，Slave 将 event 写入 relaylog，然后将其提交到自身数据库中，实现主从数据同步。
 
 对于数据库之上的业务层来说，基于 MySQL 的主从复制集群，单点写入 Master ,在 event 同步到 Slave 后，读逻辑可以从任何一个 Slave 读取数据，以读写分离的方式，大大降低 Master 的运行负载，同时提升了 Slave 的资源利用。
@@ -102,7 +102,7 @@ MGR 由若干个节点共同组成一个复制组，一个事务的提交，必�
 
 最终，所有组内成员以相同的顺序接收同一组事务。因此组内成员以相同的顺序应用相同的修改，保证组内数据强一致性。
 
-![mysql](https://i-blog.csdnimg.cn/direct/7eb8c89379ce45dbbd68aa09029e188e.png)
+![mysql](../images/7eb8c89379ce45dbbd68aa09029e188e.png)
 
 有下面的几种特性：
 
@@ -125,7 +125,7 @@ MGR 由若干个节点共同组成一个复制组，一个事务的提交，必�
 ## InnoDB Cluster
 `InnoDB Cluster` 是官方提供的高可用方案,是 MySQL 的一种高可用性(HA)解决方案，它通过使用 `MySQL Group Replication` 来实现数据的自动复制和高可用性，`InnoDB Cluster` 通常包含下面三个关键组件：
 
-![mysql](https://i-blog.csdnimg.cn/direct/ed8543ed024149d3a0e38b7a0e063796.png)
+![mysql](../images//ed8543ed024149d3a0e38b7a0e063796.png)
 
 1. MySQL Shell: 它是 MySQL 的高级管理客户端;
 
@@ -156,7 +156,7 @@ MySQL Server 基于 `MySQL Group Replication` 构建，提供自动成员管理�
 
 `InnoDB ClusterSet` 使用专用的 `ClusterSet` 复制通道自动管理从主集群到副本集群的复制。如果主集群由于数据中心损坏或网络连接丢失而变得无法使用，用户可以激活副本集群以恢复服务的可用性。
 
-![mysql](https://i-blog.csdnimg.cn/direct/dbadf4d83436430e864ca5c0f71ade66.png)
+![mysql](../images//dbadf4d83436430e864ca5c0f71ade66.png)
 
 `InnoDB ClusterSet` 的特点：
 
@@ -185,7 +185,7 @@ MySQL Server 基于 `MySQL Group Replication` 构建，提供自动成员管理�
 
 与`InnoDB cluster` 类似, `MySQL Router` 支持针对 `InnoDB ReplicaSet` 的引导, 这意味着可以自动配置 ` MySQL Router` 以使用 `InnoDB ReplicaSet`, 而无需手动配置文件. 这使得 `InnoDB ReplicaSet `成为一种快速简便的方法, 可以启动和运行 MySQL 复制和 MySQL Router, 非常适合扩展读取, 并在不需要 InnoDB 集群提供高可用性的用例中提供手动故障转移功能。
 
-![mysql](https://i-blog.csdnimg.cn/direct/9cfaa58c601445d590ae66f20013c2ef.png)
+![mysql](../images//9cfaa58c601445d590ae66f20013c2ef.png)
 
 `InnoDB ReplicaSet` 的限制：
 
@@ -210,7 +210,7 @@ MySQL Server 基于 `MySQL Group Replication` 构建，提供自动成员管理�
 
 `MMM` 中是通过一个 VIP(虚拟 IP) 的机制来保证集群的高可用的。整个集群中，在主节点会提供一个 VIP 地址来提供数据读写服务，当出现故障的时候，VIP 就会从原来的主节点便宜到其他节点，由其他节点提供服务。
 
-![mysql](https://i-blog.csdnimg.cn/direct/4d827fe1f1ce48a38163c858b7c4e14d.png)
+![mysql](../images//4d827fe1f1ce48a38163c858b7c4e14d.png)
 
 `MMM` 无法完全的保证数据一致性，所以适用于对数据的一致性要求不是很高的场景。（因为主备上的数据不一定是最新的，可能还没从库的新。解决方法：开启半同步）。
 
@@ -231,7 +231,7 @@ MySQL Server 基于 `MySQL Group Replication` 构建，提供自动成员管理�
 
 这个工具专门用于监控主库的状态，当发现 master 节点故障的时候，会自动提升其中拥有新数据的 slave 节点成为新的 master 节点，在此期间,MHA 会通过其他从节点获取额外的信息来避免数据一致性问题。MHA 还提供了 mater 节点的在线切换功能，即按需切换 master-slave 节点。`MHA `能够在`30`秒内实现故障切换，并能在故障切换过程中，最大程度的保证数据一致性。
 
-![mysql](https://i-blog.csdnimg.cn/direct/7fd6bd10d153485ea9a8fa2ffdff0748.png)
+![mysql](../images//7fd6bd10d153485ea9a8fa2ffdff0748.png)
 
 `MHA `由两部分组成；
 
@@ -282,7 +282,7 @@ MySQL Server 基于 `MySQL Group Replication` 构建，提供自动成员管理�
 
 其本身具有 multi-master 特性，支持多点写入，`Galera Cluster` 中每个实例都是对等的，互为主从。当客户端读写数据的时候，可以选择任一 MySQL 实例，对于读操作，每个实例读取到的数据都是相同的。对于写操作，当数据写入某一节点后，集群会将其同步到其它节点。这种架构不共享任何数据，是一种高冗余架构。
 
-![mysql](https://i-blog.csdnimg.cn/direct/7bc13c26c025478c97f127789f6b9092.png)
+![mysql](../images//7bc13c26c025478c97f127789f6b9092.png)
 
 **主要功能**
 
@@ -326,7 +326,7 @@ MySQL Server 基于 `MySQL Group Replication` 构建，提供自动成员管理�
 
 事务现在本地执行，然后发送的其他节点做冲突验证，没有冲突的时候所有节点提交事务，否则在所有节点回滚。
 
-![mysql](https://i-blog.csdnimg.cn/direct/a3cae8cd77b34eb6b6be23233a0218ab.png)
+![mysql](../images//a3cae8cd77b34eb6b6be23233a0218ab.png)
 
 当客户端发出 commit 命令时，在实际提交之前，对数据所做的更改都会收集到一个写集合中，写集合中包含事务信息和所更改行的主键，数据库将写集发送到其它节点。
 
@@ -347,7 +347,7 @@ MySQL Server 基于 `MySQL Group Replication` 构建，提供自动成员管理�
 
 NDB 是一种内存性的存储引擎,使用 `Sarding-Nothing` 的无共享的架构。`Sarding-Nothing` 指的是每个节点有独立的处理器，磁盘和内存，节点之间没有共享资源完全独立互不干扰，节点之间通过高速网络组在一起，每个节点相当于是一个小型的数据库，存储部分数据。这种架构的好处是可以利用节点的分布性并行处理数据，调高整体的性能，还有就是有很高的水平扩展性能，只需要增加节点就能增加数据的处理能力。
 
-![mysql](https://i-blog.csdnimg.cn/direct/79d03ac329db4f70a47c540baa8bb1ca.png)
+![mysql](../images//79d03ac329db4f70a47c540baa8bb1ca.png)
 
 `MySql Cluster` 中包含三种节点，分别是管理节点(`NDB Management Server`)、数据节点(`Data Nodes`)和 SQL查询节点(`SQL Nodes`) 。
 
@@ -364,7 +364,7 @@ SQL Nodes 是应用程序的接口，像普通的 mysqld 服务一样，接受�
 
 `副本（Replica）`：分区数据的备份，有几个分区就有几个副本，为了避免单点，保证 MySql Cluster 集群的高可用，原始数据对应的分区和副本通常会保存在不同的主机上，在一个节点组内进行交叉备份。
 
-![mysql](https://i-blog.csdnimg.cn/direct/067e6e2272204affb53241dd3e061b72.png)
+![mysql](../images//067e6e2272204affb53241dd3e061b72.png)
 
 栗如，上面的例子，有四个数据节点（使用ndbd），副本数为2的集群，节点组被分为2组（4/2），数据被分为4个分区，数据分配情况如下:
 
@@ -418,7 +418,7 @@ SQL Nodes 是应用程序的接口，像普通的 mysqld 服务一样，接受�
 
 `HA Group` 保证访问指定 `HA Group` 的数据总是可用的，同时其基础的数据复制是基于 MySQL Replication 实现的。
 
-![mysql](https://i-blog.csdnimg.cn/direct/02b26d31e9274108b2873c6122cddcb6.png)
+![mysql](../images//02b26d31e9274108b2873c6122cddcb6.png)
 
 **缺点**
 

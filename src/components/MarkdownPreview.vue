@@ -9,7 +9,8 @@ import MarkdownIt from "markdown-it";
 import frontMatter from "markdown-it-front-matter";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
-import ClipboardJS from "clipboard"; // 引入 clipboard.js
+import ClipboardJS from "clipboard";
+import jsYaml from "js-yaml"; // 引入 js-yaml
 
 export default {
   name: "MarkdownPreview",
@@ -35,19 +36,18 @@ export default {
   },
   computed: {
     innerHtml() {
-			// console.log(this.content)
       return this.md.render(this.content);
-    }
-  },
-  watch: {
-    content() {
-      this.$nextTick(() => {
-        this.addCopyButton();
-      });
     }
   },
   mounted() {
     this.addCopyButton();
+  },
+  watch: {
+    content(newContent) {
+      this.$nextTick(() => {
+        this.addCopyButton(); // 仅在 content 变化后更新按钮
+      });
+    }
   },
   methods: {
     addCopyButton() {
@@ -112,7 +112,15 @@ pre {
 .copy-btn:hover {
   background-color: #45a049;
 }
+
 p {
-    margin-bottom: 1em; /* 确保段落之间有间距 */
+  margin-bottom: 1em; /* 确保段落之间有间距 */
 }
+
+img {
+  max-width: 100%;
+  max-height: 100vh;
+  object-fit: contain; /* 确保图片比例不变 */
+}
+
 </style>

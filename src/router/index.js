@@ -19,12 +19,12 @@ export async function loadDynamicRoutes() {
   try {
     const response = await axios.get('/links.json');
     const mdLinks = response.data;
-
+		var timestamp = Date.parse(new Date()); 
     mdLinks.forEach(link => {
       const dynamicRoute = {
-        path: link.path, // 例如 "/articles/application-deploy-strategy"
+        path: link.path,//+'?version='+timestamp, // 例如 "/articles/application-deploy-strategy"
         name: link.name,
-        component: MdViewer,
+        component: () => import(`../views/${link.component}.vue`),
         props: { url: link.url } // 把 URL 作为参数传递
       };
 

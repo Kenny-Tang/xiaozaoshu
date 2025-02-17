@@ -1,16 +1,13 @@
 <template>
   <el-container style="height: 100vh;">
+		<!-- 侧边栏收起/展开按钮 -->
+		<div class="toggle-button" @click="toggleSidebar">
+		  <el-icon v-if="isCollapsed"><Expand /></el-icon>
+		  <el-icon v-else><Fold /></el-icon>
+		</div>
     <!-- 侧边栏 -->
     <el-aside :width="isCollapsed ? '0px' : '200px'" class="aside">
       <el-menu :default-active="activeMenu" router :collapse="isCollapsed">
-        <el-menu-item index="/">
-          <el-icon><House /></el-icon>
-          <template #title>首页</template>
-        </el-menu-item>
-        <el-menu-item index="/about">
-          <el-icon><Document /></el-icon>
-          <template #title>Vue Anki</template>
-        </el-menu-item>
         <el-menu-item v-for="link in links" :key="link.path" :index="link.path">
           <el-icon v-if="link.icon">
             <component :is="iconMap[link.icon]"></component>
@@ -19,13 +16,6 @@
         </el-menu-item>
       </el-menu>
     </el-aside>
-
-    <!-- 侧边栏收起/展开按钮 -->
-    <div class="toggle-button" @click="toggleSidebar">
-      <el-icon v-if="isCollapsed"><Expand /></el-icon>
-      <el-icon v-else><Fold /></el-icon>
-    </div>
-
     <el-container>
       <el-main>
         <router-view></router-view>
@@ -38,12 +28,12 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
-import { Expand, Fold, House, Document } from '@element-plus/icons-vue';
+import { Expand, Fold } from '@element-plus/icons-vue';
 
 const links = ref([]);
 const route = useRoute();
 const activeMenu = ref(route.path);
-const isCollapsed = ref(false);
+const isCollapsed = ref(true);
 
 // 创建一个 **图标映射表**
 const iconMap = {};
@@ -83,9 +73,6 @@ const toggleSidebar = () => {
 
 .toggle-button {
   position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
   background: #1f2d3d;
   color: white;
   padding: 12px;

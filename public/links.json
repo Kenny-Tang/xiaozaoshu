@@ -1,49 +1,82 @@
 [
+	{ 
+		"path": "/",
+		"name": "首页", 
+		"component": "HomeView" ,
+		"icon": "House"
+	},
+	{ 
+		"path": "/about", 
+		"name": "Vue Anki", 
+		"component": "AboutView" ,
+		"icon": "Document"
+	},
   {
 	  "name": "服务发布策略",
 	  "path": "/articles/application-deploy-strategy",
-	  "url": "/articles/SnowflakeId.md",
-	  "icon": "Document"
+	  "url": "/articles/ApplicationDeployStrategy.md",
+	  "icon": "Document",
+		"component": "MdViewer"
   },
 	{
 		"name": "研发及上线规范",
 		"path": "/articles/code-and-deploy",
 		"url": "/articles/CodeAndDeploy.md",
-		"icon": "Document"
+		"icon": "Document",
+		"component": "MdViewer"
 	},{
 		"name": "基于雪花算法的ID生成器",
 		"path": "/articles/snowflake-id-gen",
 		"url": "/articles/SnowflakeId.md",
-	"icon": "Document"
+		"icon": "Document",
+	  "component": "MdViewer"
 	}, {
 		"name": "Maven 常用命令",
 		"path": "/articles/maven-common-command",
 		"url": "/articles/MavenCommonCommand.md",
-	"icon": "Document"
+		"icon": "Document",
+		"component": "MdViewer"
 	},{
 		"name": "Maven 分不同的环境打包不同目录下的配置文件",
 		"path": "/articles/maven-separate-env-profile",
 		"url": "/articles/MavenSeparateEnvProfile.md",
-	"icon": "Document"
+		"icon": "Document",
+		"component": "MdViewer"
 	},{
 		"name": "消息队列（MQ）中间件选型比较",
 		"path": "/articles/mq-compare",
 		"url": "/articles/MQ.md",
-	"icon": "Document"
+		"icon": "Document",
+		"component": "MdViewer"
 	},{
 		"name": "ElasticSearchStack 安装于使用",
 		"path": "/articles/es-stack-install",
 		"url": "/articles/ElasticStack.md",
-	"icon": "Document"
+		"icon": "Document",
+		"component": "MdViewer"
 	},{
 		"name": "MySQL集群",
 		"path": "/articles/mysql-cluster",
 		"url": "/articles/MySQL集群.md",
-	"icon": "Document"
+		"icon": "Document",
+		"component": "MdViewer"
 	},{
 		"name": "Postman 使用",
 		"path": "/articles/postman",
 		"url": "/articles/Postman.md",
-	"icon": "Document"
+		"icon": "Document",
+		"component": "MdViewer"
+	},{
+		"name": "Docker 安装与使用",
+		"path": "/articles/docker",
+		"url": "/articles/docker.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},{
+		"name": "Docker 安装 Nginx",
+		"path": "/articles/docker-nginx",
+		"url": "/articles/docker-nginx.md",
+		"icon": "Document",
+		"component": "MdViewer"
 	}
 ]
