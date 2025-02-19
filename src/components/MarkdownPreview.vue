@@ -8,7 +8,7 @@
 import MarkdownIt from "markdown-it";
 import frontMatter from "markdown-it-front-matter";
 import hljs from "highlight.js";
-import "highlight.js/styles/github.css";
+import "highlight.js/styles/github-dark.css";
 import ClipboardJS from "clipboard";
 import jsYaml from "js-yaml"; // 引入 js-yaml
 
@@ -90,7 +90,7 @@ export default {
 <style>
 pre {
   padding: 10px;
-  background: #f6f8fa;
+  background: #e5e9e5;
   border-radius: 5px;
   overflow-x: auto;
   position: relative;
@@ -115,7 +115,7 @@ pre {
 
 p {
   margin-bottom: 1em; /* 确保段落之间有间距 */
-}
+} 
 
 img {
   max-width: 100%;

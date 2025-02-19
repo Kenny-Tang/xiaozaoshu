@@ -4,8 +4,13 @@
 		"name": "首页", 
 		"component": "HomeView" ,
 		"icon": "House"
-	},
-	{ 
+	},{
+		"name": "Docker 安装 MySQL",
+		"path": "/articles/docker-mysql",
+		"url": "/articles/Docker-MySQL.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	}, {
 		"path": "/about", 
 		"name": "Vue Anki", 
 		"component": "AboutView" ,
@@ -16,7 +21,7 @@
 	  "path": "/articles/application-deploy-strategy",
 	  "url": "/articles/ApplicationDeployStrategy.md",
 	  "icon": "Document",
-		"component": "MdViewer"
+	  "component": "MdViewer"
   },
 	{
 		"name": "研发及上线规范",
