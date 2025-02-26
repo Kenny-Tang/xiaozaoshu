@@ -10,4 +10,6 @@ loadDynamicRoutes().then(() => { // 🔹 确保加载完动态路由后再挂载
   app.use(router);
   app.use(ElementPlus);
   app.mount('#app');
+}).catch(error => {
+  console.error('加载动态路由失败：', error);
 });

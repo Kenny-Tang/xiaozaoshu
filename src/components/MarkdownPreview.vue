@@ -88,6 +88,13 @@ export default {
 </script>
 
 <style>
+blockquote {
+  background: #e5e9e5;
+  border-radius: 5px;
+  overflow-x: auto;
+  padding-left: 10px;
+  margin-bottom: 1em;
+}
 pre {
   padding: 10px;
   background: #e5e9e5;
@@ -113,14 +120,27 @@ pre {
   background-color: #45a049;
 }
 
-p {
-  margin-bottom: 1em; /* 确保段落之间有间距 */
-} 
-
 img {
   max-width: 100%;
   max-height: 100vh;
   object-fit: contain; /* 确保图片比例不变 */
 }
+
+table {
+  border-collapse: collapse;
+  width: 90%;
+}
+
+th, td {
+  border: 1px solid #333; /* 加粗边框 */
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #444444ad; /* 让表头更明显 */
+  color: rgb(6, 6, 6);
+}
+
 
 </style>

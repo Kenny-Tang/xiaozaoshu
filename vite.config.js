@@ -18,4 +18,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+	build: {
+	    rollupOptions: {
+	      output: {
+	        manualChunks: {
+	          vendor: ['element-plus', 'axios'],  // You can specify the libraries or files to be bundled separately
+	        }
+	      }
+	    }
+	  }
 })

@@ -27,8 +27,8 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import * as ElementPlusIconsVue from '@element-plus/icons-vue';
-import { Expand, Fold } from '@element-plus/icons-vue';
+// import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { Expand, Fold , Document, House} from '@element-plus/icons-vue';
 
 const links = ref([]);
 const route = useRoute();
@@ -36,10 +36,13 @@ const activeMenu = ref(route.path);
 const isCollapsed = ref(true);
 
 // 创建一个 **图标映射表**
-const iconMap = {};
-Object.keys(ElementPlusIconsVue).forEach((key) => {
-  iconMap[key] = ElementPlusIconsVue[key];
-});
+const iconMap = {
+	House: House,
+	Document: Document
+};
+// Object.keys(ElementPlusIconsVue).forEach((key) => {
+//   iconMap[key] = ElementPlusIconsVue[key];
+// });
 
 // 监听路由变化，确保菜单高亮
 watch(route, (newRoute) => {
