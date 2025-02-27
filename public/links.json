@@ -2,8 +2,22 @@
 	{ 
 		"path": "/",
 		"name": "首页", 
-		"component": "HomeView" ,
+		"url": "/articles/Home.md",
+		"component": "MdViewer" ,
 		"icon": "House"
+	},{
+		"name": "链路追踪及指标监控",
+		"path": "/articles/tracing-and-metrics",
+		"url": "/articles/Tracing & Metrics.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},
+	{
+		"name": "Skywalking",
+		"path": "/articles/skywalking",
+		"url": "/articles/Skywalking.md",
+		"icon": "Document",
+		"component": "MdViewer"
 	},{
 	"name": "数大雁",
 	"path": "/articles/goose-count",

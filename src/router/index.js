@@ -4,7 +4,7 @@ import MdViewer from '../views/MdViewer.vue';
 import axios from 'axios';
 
 const routes = [
-  { path: '/', name: 'home', component: HomeView },
+  { path: '/home', name: 'home', component: HomeView },
   { path: '/about', name: 'Vue Anki', component: () => import('../views/AboutView.vue') },
   { path: '/md-view', name: 'MdViewer', component: MdViewer }
 ];
