@@ -109,5 +109,11 @@
 		"url": "/articles/docker-nginx.md",
 		"icon": "Document",
 		"component": "MdViewer"
+	},{
+		"path": "/articles/vite-config-server",
+		"name": "vite.config server 配置详解",
+		"url": "/articles/vite.config.js server 配置详解.md",
+		"icon": "Document",
+		"component": "MdViewer"
 	}
 ]

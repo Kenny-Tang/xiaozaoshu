@@ -29,6 +29,7 @@ import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 // import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { Expand, Fold , Document, House} from '@element-plus/icons-vue';
+import axios from 'axios';
 
 const links = ref([]);
 const route = useRoute();
@@ -52,8 +53,11 @@ watch(route, (newRoute) => {
 // 加载 JSON 菜单数据并更新路由
 onMounted(async () => {
   try {
-    const response = await fetch('/links.json'); // ✅ 从 public 目录加载
-    links.value = await response.json();
+    //const response = await fetch('/links.json'); // ✅ 从 public 目录加载
+    //const response = await axios.get('/api/article/list');
+    const response = await axios.get('/links.json');
+
+    links.value = await response.data;
   } catch (error) {
     console.error('Failed to load links:', error);
   }
