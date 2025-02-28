@@ -317,7 +317,7 @@ Changed password for user [logstash_system]
 Changed password for user [beats_system]
 Changed password for user [remote_monitoring_user]
 Changed password for user [elastic]
-[elasticsearch@zeus bin]$ 1qaz@WSX
+[elasticsearch@zeus bin]$ 
 ```
 ## Security
 Elasticsearch默认没有开启安全组件，生产环境中是不允许直接访问的，必须开启安全组件后才能对系统及相关的数据进行访问
@@ -410,7 +410,7 @@ server.port: 10940
 # the username and password that the Kibana server uses to perform maintenance on the Kibana
 # index at startup.
 elasticsearch.username: "kibana_system"
-elasticsearch.password: "1qaz@WSX"
+elasticsearch.password: "123456"
 ```
 # Logstash 修改配置
 虽然我们在开启es认证时设置过"logstash_system"用户，但是这个用户并不能像kibana那样直接使用，如果直接使用"logstash_system"用户的话，在将数据写入索引的时候，会报403的错误，如下：

@@ -238,7 +238,7 @@ rules:
       } 
 ```
 
-添加指标配置 `logwarning.yaml`
+添加指标配置 `log-mal-rules/logwarning.yaml`
 ```shell
 metricPrefix: instance
 metricsRules:
