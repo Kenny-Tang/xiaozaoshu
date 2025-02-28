@@ -1,6 +1,16 @@
 <template>
-  <div>
-    <div v-html="innerHtml"></div>
+  <div class="markdown-container">
+    <div class="content">
+      <div v-html="innerHtml"></div>
+    </div>
+    <div class="toc">
+      <h3>文档目录</h3>
+      <ul>
+        <li v-for="(item, index) in toc" :key="index">
+          <a :href="'#' + item.id">{{ item.title }}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -31,12 +41,15 @@ export default {
         }
       }).use(frontMatter, (fm) => {
         this.metadata = this.parseYaml(fm);
-      })
+      }),
+      toc: [] // 存放目录项
     };
   },
   computed: {
     innerHtml() {
-      return this.md.render(this.content);
+      const html = this.md.render(this.content);
+      // this.generateTOC();  // 在渲染内容时生成目录
+      return html;
     }
   },
   mounted() {
@@ -46,6 +59,7 @@ export default {
     content(newContent) {
       this.$nextTick(() => {
         this.addCopyButton(); // 仅在 content 变化后更新按钮
+        this.generateTOC();  // 在渲染内容时生成目录
       });
     }
   },
@@ -82,12 +96,64 @@ export default {
         console.error("YAML 解析失败:", e);
         return {};
       }
+    },
+    generateTOC() {
+      const headings = document.querySelectorAll('.content h1, .content h2, .content h3, .content h4, .content h5, .content h6');
+      this.toc = []; // 重置目录
+      headings.forEach((heading) => {
+        const level = parseInt(heading.tagName[1]);
+        const id = heading.id || heading.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+        heading.id = id; // 设置 ID 方便跳转
+
+        this.toc.push({
+          title: heading.textContent.trim(),
+          id: id,
+          level: level
+        });
+      });
     }
   }
 };
 </script>
 
 <style>
+.markdown-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.content {
+  width: 80%;
+}
+
+.toc {
+  width: 15%;
+  position: sticky;
+  top: 20px;
+  max-height: 100vh;
+  padding-left: 20px;
+}
+
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.toc ul li {
+  margin-bottom: 10px;
+}
+
+.toc ul li a {
+  text-decoration: none;
+  color: #0077cc;
+}
+
+.toc ul li a:hover {
+  text-decoration: underline;
+}
+
 blockquote {
   background: #e5e9e5;
   border-radius: 5px;
