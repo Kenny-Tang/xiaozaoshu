@@ -6,7 +6,7 @@
     <div class="toc">
       <h3>文档目录</h3>
       <ul>
-        <li v-for="(item, index) in toc" :key="index">
+        <li v-for="(item, index) in toc" :key="index" :style="{ marginLeft: (item.level - 1) * 15 + 'px' }">
           <a :href="'#' + item.id">{{ item.title }}</a>
         </li>
       </ul>
@@ -128,7 +128,7 @@ export default {
 }
 
 .toc {
-  width: 15%;
+  width: 18%;
   position: sticky;
   top: 20px;
   max-height: 100vh;
