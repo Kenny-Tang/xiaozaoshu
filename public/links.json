@@ -1,117 +1,116 @@
 [
 	{ 
 		"path": "/",
-		"name": "首页", 
+		"title": "首页", 
 		"url": "/articles/Home.md",
 		"component": "MdViewer" ,
 		"icon": "House"
 	},{
-		"name": "链路追踪及指标监控",
+		"title": "链路追踪及指标监控",
 		"path": "/articles/tracing-and-metrics",
 		"url": "/articles/Tracing & Metrics.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},
 	{
-		"name": "Skywalking",
+		"title": "Skywalking",
 		"path": "/articles/skywalking",
 		"url": "/articles/Skywalking.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-	"name": "数大雁",
-	"path": "/articles/goose-count",
-	"url": "/articles/GooseCount.md",
-	"icon": "Document",
-	"component": "MdViewer"
-},{
-		"name": "服务器主板可以单独升级吗？有什么影响？",
+		"title": "数大雁",
+		"path": "/articles/goose-count",
+		"url": "/articles/GooseCount.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},{
+		"title": "服务器主板可以单独升级吗？有什么影响？",
 		"path": "/articles/server-board-upgrade",
 		"url": "/articles/BoardUpGrade.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "Docker 安装 MySQL",
+		"title": "Docker 安装 MySQL",
 		"path": "/articles/docker-mysql",
 		"url": "/articles/Docker-MySQL.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	}, {
 		"path": "/about", 
-		"name": "Vue Anki", 
+		"title": "Vue Anki", 
 		"component": "AboutView" ,
 		"icon": "Document"
-	},
-  {
-	  "name": "服务发布策略",
+	},{
+	  "title": "服务发布策略",
 	  "path": "/articles/application-deploy-strategy",
 	  "url": "/articles/ApplicationDeployStrategy.md",
 	  "icon": "Document",
 	  "component": "MdViewer"
   },
 	{
-		"name": "研发及上线规范",
+		"title": "研发及上线规范",
 		"path": "/articles/code-and-deploy",
 		"url": "/articles/CodeAndDeploy.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "基于雪花算法的ID生成器",
+		"title": "基于雪花算法的ID生成器",
 		"path": "/articles/snowflake-id-gen",
 		"url": "/articles/SnowflakeId.md",
 		"icon": "Document",
 	  "component": "MdViewer"
 	}, {
-		"name": "Maven 常用命令",
+		"title": "Maven 常用命令",
 		"path": "/articles/maven-common-command",
 		"url": "/articles/MavenCommonCommand.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "Maven 分不同的环境打包不同目录下的配置文件",
+		"title": "Maven 分不同的环境打包不同目录下的配置文件",
 		"path": "/articles/maven-separate-env-profile",
 		"url": "/articles/MavenSeparateEnvProfile.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "消息队列（MQ）中间件选型比较",
+		"title": "消息队列（MQ）中间件选型比较",
 		"path": "/articles/mq-compare",
 		"url": "/articles/MQ.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "ElasticSearchStack 安装于使用",
+		"title": "ElasticSearchStack 安装于使用",
 		"path": "/articles/es-stack-install",
 		"url": "/articles/ElasticStack.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "MySQL集群",
+		"title": "MySQL集群",
 		"path": "/articles/mysql-cluster",
 		"url": "/articles/MySQL集群.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "Postman 使用",
+		"title": "Postman 使用",
 		"path": "/articles/postman",
 		"url": "/articles/Postman.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "Docker 安装与使用",
+		"title": "Docker 安装与使用",
 		"path": "/articles/docker",
 		"url": "/articles/docker.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
-		"name": "Docker 安装 Nginx",
+		"title": "Docker 安装 Nginx",
 		"path": "/articles/docker-nginx",
 		"url": "/articles/docker-nginx.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
 		"path": "/articles/vite-config-server",
-		"name": "vite.config server 配置详解",
+		"title": "vite.config server 配置详解",
 		"url": "/articles/vite.config.js server 配置详解.md",
 		"icon": "Document",
 		"component": "MdViewer"
