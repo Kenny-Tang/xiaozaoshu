@@ -14,27 +14,56 @@ const router = createRouter({
   routes
 });
 
-// 🚀 **动态加载 links.json 并添加到路由**
-export async function loadDynamicRoutes() {
-  try {
-//    const response = await axios.get('/api/article/list');
-    const response = await axios.get('/links.json');
+function addRoutesRecursively(links, parentRoute = null) {
+  links.forEach(link => {
 
-    const mdLinks = response.data;
-		var timestamp = Date.parse(new Date()); 
-    mdLinks.forEach(link => {
+    if (link.url) {
       const dynamicRoute = {
-        path: link.path,//+'?version='+timestamp, // 例如 "/articles/application-deploy-strategy"
+        path: link.path, 
         name: link.name,
         component: () => import(`../views/${link.component}.vue`),
         props: { url: link.url } // 把 URL 作为参数传递
       };
-
+  
+      if (parentRoute) {
+        dynamicRoute.path = `${parentRoute.path}/${dynamicRoute.path}`;
+      }
       // 检查路由是否已存在
       if (!router.hasRoute(link.name)) {
         router.addRoute(dynamicRoute);
       }
-    });
+    }
+    // 递归处理子路由
+    if (link.children && link.children.length > 0) {
+      const dynamicRoute = {
+        path: link.path, 
+        name: link.name
+      }
+      addRoutesRecursively(link.children, dynamicRoute);
+    } 
+  });
+}
+
+// 🚀 **动态加载 links.json 并添加到路由**
+export async function loadDynamicRoutes() {
+  try {
+    const response = await axios.get('/links.json');
+
+    const mdLinks = response.data;
+    addRoutesRecursively(mdLinks);
+    // mdLinks.forEach(link => {
+    //   const dynamicRoute = {
+    //     path: link.path,//+'?version='+timestamp, // 例如 "/articles/application-deploy-strategy"
+    //     name: link.name,
+    //     component: () => import(`../views/${link.component}.vue`),
+    //     props: { url: link.url } // 把 URL 作为参数传递
+    //   };
+
+    //   // 检查路由是否已存在
+    //   if (!router.hasRoute(link.name)) {
+    //     router.addRoute(dynamicRoute);
+    //   }
+    // });
 
     console.log('✅ 动态路由已加载:', router.getRoutes());
   } catch (error) {
