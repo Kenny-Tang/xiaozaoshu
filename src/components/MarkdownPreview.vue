@@ -21,6 +21,8 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
 import ClipboardJS from "clipboard";
 import jsYaml from "js-yaml"; // 引入 js-yaml
+import plantumlEncoder from "plantuml-encoder";
+
 
 export default {
   name: "MarkdownPreview",
@@ -69,24 +71,36 @@ export default {
       codeBlocks.forEach((block) => {
         if (block.parentElement.querySelector('.copy-btn')) return; // 避免重复添加按钮
 
-        const button = document.createElement("button");
-        button.className = "copy-btn";
-        button.innerText = "复制";
+        if (block.textContent.trim().startsWith("@startuml")) {
+          const encoded = plantumlEncoder.encode(block.textContent);
+          const img = document.createElement("img");
+          img.src = `https://www.plantuml.com/plantuml/svg/${encoded}`;
+          block.parentElement.prepend(img);
+          block.parentElement.style.background = 'unset'; // 隐藏代码块
+          block.style.display = 'none'; // 隐藏代码块
+          return;
+        } else {
+          const button = document.createElement("button");
+          button.className = "copy-btn";
+          button.innerText = "复制";
 
-        block.parentElement.style.position = 'relative';
-        block.parentElement.prepend(button);
+          block.parentElement.style.position = 'relative';
+          block.parentElement.prepend(button);
 
-        const clipboard = new ClipboardJS(button, {
-          text: () => block.textContent
-        });
+          const clipboard = new ClipboardJS(button, {
+            text: () => block.textContent
+          });
 
-        clipboard.on("success", () => {
-          console.log("复制成功！");
-        });
 
-        clipboard.on("error", () => {
-          console.error("复制失败！");
-        });
+          clipboard.on("success", () => {
+            console.log("复制成功！");
+          });
+
+          clipboard.on("error", () => {
+            console.error("复制失败！");
+          });
+        }
+       
       });
     },
     parseYaml(fm) {

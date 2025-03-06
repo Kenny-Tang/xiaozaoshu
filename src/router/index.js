@@ -24,10 +24,7 @@ function addRoutesRecursively(links, parentRoute = null) {
         component: () => import(`../views/${link.component}.vue`),
         props: { url: link.url } // 把 URL 作为参数传递
       };
-  
-      if (parentRoute) {
-        dynamicRoute.path = `${parentRoute.path}/${dynamicRoute.path}`;
-      }
+
       // 检查路由是否已存在
       if (!router.hasRoute(link.name)) {
         router.addRoute(dynamicRoute);

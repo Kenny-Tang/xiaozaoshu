@@ -6,22 +6,70 @@
 		"component": "MdViewer" ,
 		"icon": "House"
 	},{
-		"title": "链路追踪及指标监控",
-		"path": "/articles/tracing-and-metrics",
-		"url": "/articles/Tracing & Metrics.md",
-		"icon": "Document",
-		"component": "MdViewer"
-	},
-	{
+		"path": "/maven",
+		"title": "Maven",
+		"icon": "Folder",
+		"children": [{
+			"title": "Maven 常用命令",
+			"path": "/articles/maven-common-command",
+			"url": "/articles/MavenCommonCommand.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		},{
+			"title": "Maven 分不同的环境打包不同目录下的配置文件",
+			"path": "/articles/maven-separate-env-profile",
+			"url": "/articles/MavenSeparateEnvProfile.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		}]
+	},{
+		"path": "/algorithm",
+		"title": "算法",
+		"icon": "Folder",
+		"children": [{
+			"title": "数大雁",
+			"path": "/articles/goose-count",
+			"url": "/articles/GooseCount.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		}]
+	},{
+		"path": "/database",
+		"title": "数据库",
+		"icon": "Folder",
+		"children": [{
+			"title": "Docker 安装 MySQL",
+			"path": "/articles/docker-mysql",
+			"url": "/articles/Docker-MySQL.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		},{
+			"title": "MySQL集群",
+			"path": "/articles/mysql-cluster",
+			"url": "/articles/MySQL集群.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		}]
+	},{
+		"path": "/front-end",
+		"title": "前端",
+		"icon": "Folder",
+		"children": [{
+			"path": "/articles/vite-config-server",
+			"title": "vite.config server 配置详解",
+			"url": "/articles/vite.config.js server 配置详解.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		},{
+			"path": "/about", 
+			"title": "Vue Anki", 
+			"component": "AboutView" ,
+			"icon": "Document"
+		}]
+	},{
 		"title": "Skywalking",
 		"path": "/articles/skywalking",
 		"url": "/articles/Skywalking.md",
-		"icon": "Document",
-		"component": "MdViewer"
-	},{
-		"title": "数大雁",
-		"path": "/articles/goose-count",
-		"url": "/articles/GooseCount.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
@@ -30,17 +78,6 @@
 		"url": "/articles/BoardUpGrade.md",
 		"icon": "Document",
 		"component": "MdViewer"
-	},{
-		"title": "Docker 安装 MySQL",
-		"path": "/articles/docker-mysql",
-		"url": "/articles/Docker-MySQL.md",
-		"icon": "Document",
-		"component": "MdViewer"
-	}, {
-		"path": "/about", 
-		"title": "Vue Anki", 
-		"component": "AboutView" ,
-		"icon": "Document"
 	},{
 	  "title": "服务发布策略",
 	  "path": "/articles/application-deploy-strategy",
@@ -60,18 +97,6 @@
 		"url": "/articles/SnowflakeId.md",
 		"icon": "Document",
 	  "component": "MdViewer"
-	}, {
-		"title": "Maven 常用命令",
-		"path": "/articles/maven-common-command",
-		"url": "/articles/MavenCommonCommand.md",
-		"icon": "Document",
-		"component": "MdViewer"
-	},{
-		"title": "Maven 分不同的环境打包不同目录下的配置文件",
-		"path": "/articles/maven-separate-env-profile",
-		"url": "/articles/MavenSeparateEnvProfile.md",
-		"icon": "Document",
-		"component": "MdViewer"
 	},{
 		"title": "消息队列（MQ）中间件选型比较",
 		"path": "/articles/mq-compare",
@@ -82,12 +107,6 @@
 		"title": "ElasticSearchStack 安装于使用",
 		"path": "/articles/es-stack-install",
 		"url": "/articles/ElasticStack.md",
-		"icon": "Document",
-		"component": "MdViewer"
-	},{
-		"title": "MySQL集群",
-		"path": "/articles/mysql-cluster",
-		"url": "/articles/MySQL集群.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
@@ -106,12 +125,6 @@
 		"title": "Docker 安装 Nginx",
 		"path": "/articles/docker-nginx",
 		"url": "/articles/docker-nginx.md",
-		"icon": "Document",
-		"component": "MdViewer"
-	},{
-		"path": "/articles/vite-config-server",
-		"title": "vite.config server 配置详解",
-		"url": "/articles/vite.config.js server 配置详解.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	}
