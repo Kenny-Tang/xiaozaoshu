@@ -3,7 +3,7 @@
 		"path": "/",
 		"title": "首页", 
 		"url": "/articles/Home.md",
-		"component": "MdViewer" ,
+		"component": "HomeView" ,
 		"icon": "House"
 	},{
 		"path": "/maven",

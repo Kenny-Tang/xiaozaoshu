@@ -58,7 +58,7 @@ const toggleSidebar = () => {
 
 <style scoped>
 .aside {
-  background-color: unset;
+  background-color: inherit;
   color: white;
   min-height: 100vh;
   position: relative;
