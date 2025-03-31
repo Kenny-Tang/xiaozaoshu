@@ -36,23 +36,31 @@ vim /usr/local/elasticseach/elasticsearch-7.17.25/config/elasticsearch.yml
 
 启动报错
 ```shell
-ERROR: [1] bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
-bootstrap check failure [1] of [1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+ERROR: [2] bootstrap checks failed. You must address the points described in the following [2] lines before starting Elasticsearch.
+bootstrap check failure [1] of [2]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
+bootstrap check failure [2] of [2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
 ```
-系统虚拟内存默认最大映射数为65530，无法满足ES系统要求，需要调整为262144以上。
+主要是文件权限与内存大小问题：
 
-设置vm.max_map_count参数
-```shell
-#修改文件 以下操作需要用root用户执行
-sudo vim /etc/sysctl.conf
- 
-#添加参数
-...
-vm.max_map_count = 262144
+elasticsearch用户拥有的可创建文件描述的权限太低，至少需要65536,
 
-重新加载/etc/sysctl.conf配置
-sysctl -p
-```
+处理办法: #切换到root用户修改
+
+vim /etc/security/limits.conf # 在最后面追加下面内容
+
+    elasticsearch hard nofile 65536
+    elasticsearch soft nofile 65536
+
+max_map_count文件包含限制一个进程可以拥有的VMA(虚拟内存区域)的数量
+
+处理办法: #切换到root用户修改
+
+vim /etc/sysctl.conf # 在最后面追加下面内容
+
+    vm.max_map_count=655360
+
+执行 
+    sysctl -p
 
 后台启动
 

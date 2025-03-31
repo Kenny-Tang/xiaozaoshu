@@ -67,6 +67,12 @@
 			"icon": "Document"
 		}]
 	},{
+		"title": "富文本转PDF",
+		"path": "/articles/html-to-pdf",
+		"url": "/articles/HtmlToPdf.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},{
 		"title": "Skywalking",
 		"path": "/articles/skywalking",
 		"url": "/articles/Skywalking.md",
