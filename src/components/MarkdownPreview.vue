@@ -174,6 +174,8 @@ blockquote {
   overflow-x: auto;
   padding-left: 10px;
   margin-bottom: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 pre {
   padding: 10px;

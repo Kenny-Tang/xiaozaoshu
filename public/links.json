@@ -6,6 +6,14 @@
 		"component": "HomeView" ,
 		"icon": "House"
 	},{
+		"title": "Windows Server 大量文件解密性能分析",
+		"path": "/articles/disk-io-performance",
+		"url": "/articles/Windows Server 大量文件解密性能分析.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},
+
+	{
 		"path": "/maven",
 		"title": "Maven",
 		"icon": "Folder",
@@ -128,6 +136,13 @@
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
+		"title": "Docker 手动安装",
+		"path": "/articles/docker-offline-install",
+		"url": "/articles/Docker 手动安装.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},
+	{
 		"title": "Docker 安装 Nginx",
 		"path": "/articles/docker-nginx",
 		"url": "/articles/docker-nginx.md",
