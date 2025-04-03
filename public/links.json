@@ -3,7 +3,7 @@
 		"path": "/",
 		"title": "首页", 
 		"url": "/articles/Home.md",
-		"component": "HomeView" ,
+		"component": "MdViewer" ,
 		"icon": "House"
 	},{
 		"title": "Windows Server 大量文件解密性能分析",
@@ -12,7 +12,21 @@
 		"icon": "Document",
 		"component": "MdViewer"
 	},
-
+	{
+		"title": "阿里巴巴Java开发手册v1.4.0",
+		"path": "/articles/alibaba-java-dev-guide",
+		"url": "/articles/阿里巴巴Java开发手册v1.4.0.pdf",
+		"icon": "Document",
+		"component": "PdfViewer"
+	},
+	{
+		"title": "智能评标工具-用户操作手册-评标V5",
+		"path": "/articles/smart-bid-tool-user-guide",
+		"url": "/articles/智能评标工具-用户操作手册-评标V5.pdf",
+		"icon": "Document",
+		"component": "PdfViewer"
+	},
+	
 	{
 		"path": "/maven",
 		"title": "Maven",
