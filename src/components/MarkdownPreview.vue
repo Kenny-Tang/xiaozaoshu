@@ -93,7 +93,7 @@ export default {
 
 
           clipboard.on("success", () => {
-            console.log("复制成功！");
+            button.innerText = "已复制";
           });
 
           clipboard.on("error", () => {

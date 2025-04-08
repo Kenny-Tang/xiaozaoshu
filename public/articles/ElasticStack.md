@@ -412,7 +412,7 @@ transport.tcp.port: 10930
 server.port: 10940
 
  # The URLs of the Elasticsearch instances to use for all your queries.
- 35 elasticsearch.hosts: ["http://172.16.118.101:10920"]
+ elasticsearch.hosts: ["http://172.16.118.101:10920"]
  
 # If your Elasticsearch is protected with basic authentication, these settings provide
 # the username and password that the Kibana server uses to perform maintenance on the Kibana
