@@ -134,7 +134,7 @@ export default {
 .markdown-container {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 0px;
 }
 
 .content {
@@ -150,6 +150,8 @@ export default {
   background: #fff;
   border-left: 1px solid #ddd;
   padding: 10px;
+  border-radius: 5px;
+  margin-top: 0px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
 }
 
