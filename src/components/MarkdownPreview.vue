@@ -142,13 +142,16 @@ export default {
 }
 
 .toc {
-  width: 18%;
-  position: sticky;
-  top: 20px;
-  max-height: 100vh;
-  padding-left: 20px;
+  position: fixed;
+  right: 20px; /* 距离页面右边的距离 */
+  width: 200px; /* 宽度固定一下 */
+  max-height: 95vh; /* 限高防止超出屏幕 */
+  overflow-y: auto;
+  background: #fff;
+  border-left: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
 }
-
 
 .toc ul {
   list-style: none;
