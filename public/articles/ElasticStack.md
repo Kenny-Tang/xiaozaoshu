@@ -149,6 +149,8 @@ nohup bin/kibana &
 ```shell
 tar -xvf logstash-7.17.25-linux-x86_64.tar.gz -C /usr/local/elasticsearch
 ```
+
+## 配置
 修改配置文件
 
 vim config/logstash.conf
@@ -189,7 +191,7 @@ output {
                "port" => 51834
 }
 ```
-
+## 启动
 启动 `logstash`
 *bin/logstash -f config/ztbgl.config*
 ```shell

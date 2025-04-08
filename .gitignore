@@ -28,3 +28,9 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+public/articles/智能评标工具-用户操作手册-评标V5.pdf
+public/articles/阿里巴巴Java开发手册v1.4.0.pdf
+public/articles/标书复用-离线工具.md
+public/images/offline-reuse-plan.jpeg
+public/articles/标书复用.md
