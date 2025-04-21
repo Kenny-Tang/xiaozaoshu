@@ -3,7 +3,7 @@
 ## 安装
 ### 准备
 
-- 安装服务器： Centos8 (172.16.118.101)
+- 安装服务器： CentOS Linux release 7.9.2009 (Core)
 - JDK openjdk17
 - apache-skywalking-apm-9.7.0.tar.gz
 - apache-skywalking-java-agent-9.0.0.tgz
@@ -18,6 +18,7 @@ mv apache-skywalking-apm-bin/ skywalking-9.7.0
 因为我的目录下有两个，为了方便区分，我重命名了文件，如果不需要该过程可以跳过
 
 修该为 `elasticsearch` 为后端存储, 
+> vi config/application.yml
 ```shell
 storage:
   selector: ${SW_STORAGE:elasticsearch}

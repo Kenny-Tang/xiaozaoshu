@@ -43,10 +43,16 @@ mvn clean package
 2. 使用 -pl 参数指定模块
    在父项目目录下使用 -pl 参数指定需要打包的子模块，同时使用 -am 参数（可选）构建其依赖模块：
 ```shell
-mvn clean package -pl module-a
+mvn clean package -pl module-a  -am -Dmaven.test.skip=true
 ```
-- -pl：指定要构建的模块列表（用逗号分隔多个模块）。
-- -am（可选）：自动构建模块的依赖模块。
+#### **参数说明**：
+| 参数 | 作用 |
+|------|------|
+| `-pl` (--projects) | 指定要构建的子模块（`znpb-admin`） |
+| `-am` (--also-make) | 同时构建该模块依赖的其他模块 |
+| `-Dmaven.test.skip=true` | **完全跳过测试相关流程**（不编译、不执行） |
+| `-DskipTests` | **跳过单元测试**（编译测试代码，但不执行测试） |
+| `clean package` | 清理并打包 |
 
 ## 查看依赖关系
 ### 查看依赖树

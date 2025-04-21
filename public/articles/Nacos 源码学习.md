@@ -53,5 +53,5 @@ mvn -Prelease-nacos -Dmaven.test.skip=true clean install -U
 
 接下来，需要看一下 Nacos的客户端是如何注册服务的。
 如果可以在这个过程中增加一个机器标识，那么我们就可以再服务发现的时候利用这个标识来进行流量的隔离。
-![img.png](img.png)
+![img.png](702098479639617543.png)
 服务注册的类 ：`com.alibaba.cloud.nacos.registry.NacosServiceRegistryAutoConfiguration`

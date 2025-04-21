@@ -3,31 +3,21 @@
 		"path": "/",
 		"title": "首页", 
 		"url": "/articles/Home.md",
-		"component": "MdViewer" ,
+		"component": "HomeView" ,
 		"icon": "House"
+	},{
+		"title": "Linux reset password",
+		"path": "/articles/centos-reset-password",
+		"url": "/articles/Linux reset password.md",
+		"icon": "Document",
+		"component": "MdViewer"
 	},{
 		"title": "Windows Server 大量文件解密性能分析",
 		"path": "/articles/disk-io-performance",
 		"url": "/articles/Windows Server 大量文件解密性能分析.md",
 		"icon": "Document",
 		"component": "MdViewer"
-	},
-	{
-		"title": "阿里巴巴Java开发手册v1.4.0",
-		"path": "/articles/alibaba-java-dev-guide",
-		"url": "/articles/阿里巴巴Java开发手册v1.4.0.pdf",
-		"icon": "Document",
-		"component": "PdfViewer"
-	},
-	{
-		"title": "智能评标工具-用户操作手册-评标V5",
-		"path": "/articles/smart-bid-tool-user-guide",
-		"url": "/articles/智能评标工具-用户操作手册-评标V5.pdf",
-		"icon": "Document",
-		"component": "PdfViewer"
-	},
-	
-	{
+	},{
 		"path": "/maven",
 		"title": "Maven",
 		"icon": "Folder",
@@ -49,6 +39,30 @@
 		"title": "算法",
 		"icon": "Folder",
 		"children": [{
+			"title": "高矮个子排队",
+			"path": "/articles/Queue-tall-short",
+			"url": "/articles/高矮个子排队.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		},{
+			"title": "找终点",
+			"path": "/articles/find-endpoint",
+			"url": "/articles/找终点.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		},{
+			"title": "智能成绩表",
+			"path": "/articles/intel",
+			"url": "/articles/智能成绩表.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		},{
+			"title": "计算三叉搜索树的高度",
+			"path": "/articles/hight-of-three-branches-tree",
+			"url": "/articles/计算三叉搜索树的高度.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		},{
 			"title": "数大雁",
 			"path": "/articles/goose-count",
 			"url": "/articles/GooseCount.md",
@@ -69,6 +83,12 @@
 			"title": "MySQL集群",
 			"path": "/articles/mysql-cluster",
 			"url": "/articles/MySQL集群.md",
+			"icon": "Document",
+			"component": "MdViewer"
+		},{
+			"title": "MySQL 主从同步异常-更新主键",
+			"path": "/articles/mysql-m-s-update-pk",
+			"url": "/articles/MySQL 主从同步异常.md",
 			"icon": "Document",
 			"component": "MdViewer"
 		}]
@@ -147,6 +167,12 @@
 		"title": "Docker 安装与使用",
 		"path": "/articles/docker",
 		"url": "/articles/docker.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},{
+		"title": "Docker 私服的搭建与使用",
+		"path": "/articles/docker-registry-install-and-use",
+		"url": "/articles/Docker 私服的搭建与使用.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
