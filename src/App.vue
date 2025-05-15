@@ -28,9 +28,8 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import axios from 'axios';
+import * as userService from '@/api/modules/user.js'
 import MenuItem from './components/MenuItem.vue';
-
 const route = useRoute();
 const activeMenu = ref(route.path);
 const isCollapsed = ref(false);
@@ -44,7 +43,8 @@ watch(route, (newRoute) => {
 // 加载 JSON 菜单数据并更新路由
 onMounted(async () => {
   try {
-    menuData.value = (await axios.get('/links.json')).data;
+    const respMenu = await userService.getLinks();
+    menuData.value = respMenu;
   } catch (error) {
     console.error('Failed to load links:', error);
   }

@@ -2,10 +2,15 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
-import router, { loadDynamicRoutes } from './router'; // 确保引入 loadDynamicRoutes()
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import router, { loadDynamicRoutes } from './router';
+import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { getClientId } from '@/utils/fingerPrintHelper.js';
+
+// 初始化客户端ID
+await getClientId('vId');
 
 const app = createApp(App)
+
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }

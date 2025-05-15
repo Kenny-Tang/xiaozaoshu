@@ -13,7 +13,7 @@ export default defineConfig({
 	  open: 'home',
     proxy: {
       '/api': {
-        target: 'http://localhost:8081',
+        target: 'http://localhost:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // Vite 使用 `rewrite` 而不是 `pathRewrite`
       },

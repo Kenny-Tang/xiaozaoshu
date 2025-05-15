@@ -6,6 +6,12 @@
 		"component": "HomeView" ,
 		"icon": "House"
 	},{
+		"title": "发票获取方案设计",
+		"path": "/articles/invoice-fetch-scheme",
+		"url": "/articles/发票获取方案设计.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},{
 		"title": "Linux reset password",
 		"path": "/articles/centos-reset-password",
 		"url": "/articles/Linux reset password.md",

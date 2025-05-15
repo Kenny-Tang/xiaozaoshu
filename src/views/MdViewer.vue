@@ -7,13 +7,14 @@
 <script>
 import MarkdownPreview from '../components/MarkdownPreview.vue';
 import axios from 'axios';
+import api from '@/api/index.js';
 
 export default {
 	props: {
 		url: {
 			type: String,
 			required: true
-		}
+		},
 	},
 	data() {
 		return {
@@ -24,10 +25,12 @@ export default {
 		url(oldVal, newVal) {
 			console.log(`article 变化: ${oldVal} -> ${newVal}`);
 			this.loadMarkdown();
+      api.user.traceUserAction({'action': this.url});
 		}
 	},
 	mounted() {
 		this.loadMarkdown();
+    api.user.traceUserAction({'action': this.url});
 	},
 	components: {
 		MarkdownPreview
@@ -35,10 +38,8 @@ export default {
 	methods: {
 		async loadMarkdown() {
 			try {
-				
 				let responseA = await axios.get(this.url); // 从 public 目录加载
 				this.markdownContent = await responseA.data;
-				console.log('markdownContent:', this.markdownContent);
 			} catch (error) {
 				console.error('加载 Markdown 文件失败:', error);
 			}

@@ -22,22 +22,7 @@
 <script setup>
 import { defineProps } from "vue";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"; // 引入所有 Element Plus 图标
-// {
-//   "path": "/nested",
-//   "title": "方案设计",
-//   "icon": "Folder",
-//   "children": [
-//     {
-//     "path": "/nested/level1-2",
-//     "icon": "Folder",
-//     "title": "标书复用",
-//     "children": [
-//       { "path": "/nested/level1-2-1", "title": "设计方案", "icon": "Document"},
-//       { "path": "/nested/level1-2-2", "title": "上线方案", "icon": "Document"}
-//     ]
-//     }
-//   ]
-// }
+
 defineProps({
   menu: Object,
 });

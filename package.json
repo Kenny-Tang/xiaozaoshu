@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^4.6.2",
     "@vue-office/pdf": "^2.0.10",
     "@wangeditor/editor": "^5.1.23",
     "axios": "^1.7.9",
