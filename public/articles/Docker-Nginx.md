@@ -54,7 +54,7 @@ docker cp nginx-xiaozaoshu:/usr/share/nginx/html /usr/local/nginx/
 
 修改 `nginx` 的配置
 ```textmate
-# 编辑配置文件, 每个人的配置存放文职可能有锁不同，根据自己的配置进行调整
+# 编辑配置文件, 每个人的配置存放文职可能有所不同，根据自己的配置进行调整
 vim /usr/local/nginx/conf/conf.d/default.conf
 # 添加 charset utf-8; 配置， 使系统支持中文
 server {
@@ -167,3 +167,7 @@ docker run \
 		</tr>
 	</tbody>
 </table>
+
+
+
+

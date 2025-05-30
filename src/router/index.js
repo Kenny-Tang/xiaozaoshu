@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import BasicEditor from '../views/BasicEditor.vue';
 import MdViewer from '../views/MdViewer.vue';
 import axios from 'axios';
-
+import api from "@/api/index.js";
 
 const routes = [
-  { path: '/home', name: 'home', component: HomeView },
+  { path: '/home', name: 'home', component: BasicEditor },
   { path: '/about', name: 'Vue Anki', component: () => import('../views/AboutView.vue') },
   { path: '/md-view', name: 'MdViewer', component: MdViewer }
 ];
@@ -45,11 +45,9 @@ function addRoutesRecursively(links, parentRoute = null) {
 // 🚀 **动态加载 links.json 并添加到路由**
 export async function loadDynamicRoutes() {
   try {
-    const response = await axios.get('/links.json');
-    const mdLinks = response.data;
+    const mdLinks = await api.blog.getLinks();
     addRoutesRecursively(mdLinks);
-
-    console.log('✅ 动态路由已加载:', router.getRoutes());
+    // console.log('✅ 动态路由已加载:', router.getRoutes());
   } catch (error) {
     console.error('❌ 加载动态路由失败:', error);
   }

@@ -22,7 +22,7 @@ export default {
 		}
 	},
 	watch: {
-		url(oldVal, newVal) {
+		url(newVal, oldVal) {
 			console.log(`article 变化: ${oldVal} -> ${newVal}`);
 			this.loadMarkdown();
       api.user.traceUserAction({'action': this.url});

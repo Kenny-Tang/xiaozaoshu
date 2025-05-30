@@ -145,9 +145,9 @@ export default {
   position: fixed;
   right: 20px; /* 距离页面右边的距离 */
   width: 200px; /* 宽度固定一下 */
-  max-height: 95vh; /* 限高防止超出屏幕 */
+  max-height: 100vh; /* 限高防止超出屏幕 */
   overflow-y: auto;
-  background: #fff;
+  background: transparent;
   border-left: 1px solid #ddd;
   padding: 10px;
   border-radius: 5px;

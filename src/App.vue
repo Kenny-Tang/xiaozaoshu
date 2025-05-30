@@ -1,28 +1,30 @@
 <template>
-  <el-container>
-    <!-- 侧边栏 -->
-   
-    <el-aside :width="isCollapsed ? '40px' : '200px'" class="aside">
-      <!-- 侧边栏收起/展开按钮 -->
-      <div class="toggle-button" @click="toggleSidebar">
-        <div  v-if="isCollapsed" class="toggle-button-expand">
-          <el-icon  :size="20"><Expand /></el-icon>
+  <div class="common-layout">
+    <el-container class="top-container">
+      <el-header class="custom-header">
+        <!-- 侧边栏收起/展开按钮 -->
+        <div class="toggle-button" @click="toggleSidebar">
+          <div  v-if="isCollapsed"><el-icon :size="20"><Expand /></el-icon></div>
+          <div  v-else="isCollapsed"><el-icon :size="20"><Fold /></el-icon></div>
         </div>
-        <div  v-else="isCollapsed"class="toggle-button-fold">
-          <el-icon :size="20"><Fold /></el-icon>
-        </div>
-      </div> 
-      <!-- 菜单 -->
-      <el-menu :default-active="activeMenu" router :collapse="isCollapsed">
-          <MenuItem v-for="item in menuData" :key="item.path" :menu="item" />
-        </el-menu>
-    </el-aside>
-    <el-container>
-      <el-main>
-        <router-view></router-view>
-      </el-main>
+      </el-header>
+      <el-container>
+        <!-- 侧边栏 -->
+        <el-aside :width="isCollapsed ? '0px' : '200px'" class="aside">
+
+          <!-- 菜单 -->
+          <el-menu :default-active="activeMenu" router :collapse="isCollapsed">
+            <MenuItem v-for="item in menuData" :key="item.path" :menu="item" />
+          </el-menu>
+        </el-aside>
+        <el-container>
+          <el-main>
+            <router-view></router-view>
+          </el-main>
+        </el-container>
+      </el-container>
     </el-container>
-  </el-container>
+  </div>
 </template>
 
 <script setup>
@@ -57,9 +59,11 @@ const toggleSidebar = () => {
 </script>
 
 <style scoped>
+.custom-header {
+  padding: 0 !important;
+}
 .aside {
-  background-color: inherit;
-  color: white;
+  background-color: transparent;
   min-height: 100vh;
   position: relative;
   transition: width 0.3s ease-in-out;
@@ -67,28 +71,13 @@ const toggleSidebar = () => {
 
 .toggle-button {
   cursor: pointer;
-}
-
-.toggle-button-expand {
   display: flex;
-  justify-content: flex-end;
+  width: 180px;
   background: unset;
   color: #0e0d0d;
-  padding-bottom: 20px;
-  padding-top: 20px;
+  padding-bottom: 15px;
+  padding-top: 15px;
   padding-left: 20px;
-  transition: background 0.3s;
-  z-index: 1000;
-}
-
-.toggle-button-fold {
-  display: flex;
-  justify-content: flex-end;
-  background: unset;
-  color: #0e0d0d;
-  padding-bottom: 20px;
-  padding-top: 20px;
-  padding-right: 20px;
   transition: background 0.3s;
   z-index: 1000;
 }
