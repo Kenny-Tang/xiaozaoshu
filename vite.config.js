@@ -27,16 +27,20 @@ export default defineConfig({
   },
 
   build: {
-    // Vite 构建时会调用 esbuild 做转译和优化。你的构建目标环境（比如 "chrome87", "firefox78" 等）不支持 Top-Level Await，所以构建失败。
-    // Top-Level Await 只有在较新的环境中才支持
-    // Chrome 要到 v89+
-    // Firefox 要到 v89+
     target: 'esnext', // 或 'es2022' / 'chrome89' 等
+
+    chunkSizeWarningLimit: 1000, // 设置 chunk 大小警告限制为 1000kb
 
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['element-plus', 'axios'], // 单独打包 element-plus 和 axios
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('element-plus')) return 'element-plus'
+            if (id.includes('axios')) return 'axios'
+            if (id.includes('vue')) return 'vue'
+            if (id.includes('echarts')) return 'echarts'
+            return 'vendor'
+          }
         },
       },
     },
