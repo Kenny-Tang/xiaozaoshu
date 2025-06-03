@@ -1,5 +1,7 @@
 在 CentOS（例如 CentOS 7 或 CentOS 8）中安装 **Maven**（Apache Maven）的方法主要有两种：使用包管理器（简单但可能版本较旧），或者手动安装（推荐，可获得最新版）。
 
+[原文地址 https://www.xiaozaoshu.top/articles/linux-maven-install](https://www.xiaozaoshu.top/articles/linux-maven-install)
+
 ---
 
 ## ✅ 推荐方式：手动安装最新版 Maven

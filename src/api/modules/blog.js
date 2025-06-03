@@ -9,3 +9,10 @@ export const getHomeArticleList = (param) => request.post('/api/users/article/ho
         'Content-Type': 'application/json'
     }
 });
+
+// 添加文章
+export const postArticle = (param) => request.post('/api/users/article/', param, {
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }
+});

@@ -20,7 +20,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"; // 引入所有 Element Plus 图标
 
 defineProps({
