@@ -16,3 +16,6 @@ export const postArticle = (param) => request.post('/api/users/article/', param,
         'Content-Type': 'multipart/form-data'
     }
 });
+
+// 获取专栏
+export const getColumnInfoList = () => request.get('/api/users/columnInfo/list')

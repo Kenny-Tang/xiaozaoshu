@@ -24,15 +24,16 @@
           </span>
         </template>
         <div style="display: flex; align-items: flex-start;">
-          <el-image src="images/1871381602471264271.png" style="width: 100px; height: 100px;flex-shrink: 0;" />
-          <div style="height: 100px; display: flex;flex-direction: column;justify-content: space-between; padding-left: 20px">
-            <div>
+          <div>
+            <el-image src="images/1871381602471264271.png" style="width: 125px;flex-shrink: 0;" />
+          </div>
+          <div style="display: flex;flex-direction: column;justify-content: space-between; padding-left: 20px">
+            <div style="height: 110px;overflow: hidden;">
               {{ item.summary }}
             </div>
             <div>
               <router-link :to="item.path" class="el-link">
-                阅读全文
-                <el-icon><DArrowRight /></el-icon>
+                阅读全文 <el-icon><DArrowRight /></el-icon>
               </router-link>
             </div>
           </div>
@@ -99,6 +100,9 @@ const handleChange = (val: CollapseModelValue) => {
 .icon-ele {
   margin: 0 8px 0 auto;
   color: #409eff;
+}
+::v-deep(.el-collapse-item__content) {
+  padding-bottom: 18px; /* 👈 修改为你想要的值 */
 }
 .pagination {
   margin-top: 20px;

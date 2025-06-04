@@ -30,11 +30,12 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import {Expand, Fold} from '@element-plus/icons-vue';
 import * as userService from '@/api/modules/user.js'
 import MenuItem from './components/MenuItem.vue';
 const route = useRoute();
 const activeMenu = ref(route.path);
-const isCollapsed = ref(false);
+const isCollapsed = ref(true);
 // 模拟菜单数据（支持无限嵌套）
 const menuData = ref([]);
 // 监听路由变化，确保菜单高亮

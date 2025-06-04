@@ -1,6 +1,8 @@
 
 JavaScript 中 **`Promise`**，从概念到使用，再到原理和错误处理，全面帮你掌握它。
 
+**原文地址**：[Promise 原理和使用](https://www.xiaozaoshu.top/articles/promise)
+
 ---
 
 ## 🧠 什么是 Promise？

@@ -6,17 +6,26 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { resolve } from 'path'
+import { visualizer } from 'rollup-plugin-visualizer';
+
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
+    visualizer({ open: true }), // 打包后自动打开图形分析
     vueDevTools(),
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: 'css',
+          resolveIcons: true, // ✅ 关键点：开启图标自动引入
+        }), // ✅ 开启图标解析
+
+      ],
     })
   ],
 
@@ -51,6 +60,9 @@ export default defineConfig({
           if (id.includes('node_modules')) {
             if (id.includes('element-plus')) return 'element-plus'
             if (id.includes('axios')) return 'axios'
+            if (id.includes('vue-office')) return 'vue-office' // ✅ 拆出 vue-office
+            if (id.includes('wangeditor')) return 'wangeditor';  // 新增拆包
+            if (id.includes('highlight')) return 'highlight';  // 新增拆包
             if (id.includes('vue')) return 'vue'
             if (id.includes('echarts')) return 'echarts'
             return 'vendor'
