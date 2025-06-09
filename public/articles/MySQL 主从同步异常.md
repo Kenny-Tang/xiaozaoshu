@@ -1,4 +1,4 @@
-你遇到的这个错误：
+**MySQL** 做双主，遇到的这个错误：
 
 ```
 Could not execute Update_rows event on table ... Error_code: 1032
@@ -102,5 +102,3 @@ SHOW SLAVE STATUS\G
 - `Retrieved_Gtid_Set` 和 `Executed_Gtid_Set`（如果用 GTID）
 
 ---
-
-如果你能贴一下 `SHOW SLAVE STATUS\G` 的输出（关键字段），我可以更准确地帮你判断是否该跳过，还是建议你同步表数据修复。你想怎么处理这个错误？临时跳过还是从主库导数据修复？

@@ -16,12 +16,10 @@
 
 <script>
 import MarkdownIt from "markdown-it";
-import frontMatter from "markdown-it-front-matter";
-import hljs from "highlight.js";
-import "highlight.js/styles/github-dark.css";
 import ClipboardJS from "clipboard";
-import jsYaml from "js-yaml"; // 引入 js-yaml
 import plantumlEncoder from "plantuml-encoder";
+import markdownItMathjax from "markdown-it-mathjax3";
+
 
 
 export default {
@@ -31,19 +29,12 @@ export default {
   },
   data() {
     return {
-      metadata: {}, // 存放解析的 YAML 数据
       md: new MarkdownIt({
         html: true,
         breaks: true,
         typographer: true,
         linkify: true,
-        highlight: (code, lang) => {
-          const language = lang && hljs.getLanguage(lang) ? lang : 'plaintext';
-          return `<pre class="hljs"><code>${hljs.highlight(code, { language }).value}</code></pre>`;
-        }
-      }).use(frontMatter, (fm) => {
-        this.metadata = this.parseYaml(fm);
-      }),
+      }).use(markdownItMathjax),
       toc: [] // 存放目录项
     };
   },
@@ -102,14 +93,6 @@ export default {
         }
        
       });
-    },
-    parseYaml(fm) {
-      try {
-        return jsYaml.load(fm);
-      } catch (e) {
-        console.error("YAML 解析失败:", e);
-        return {};
-      }
     },
     generateTOC() {
       const headings = document.querySelectorAll('.content h1, .content h2, .content h3, .content h4, .content h5, .content h6');

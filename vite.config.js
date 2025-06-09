@@ -34,8 +34,9 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8081/',
+        // target: 'https://www.xiaozaoshu.top/',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''), // 使用gateway访问时不需要重写路径
       },
     },
   },
@@ -50,6 +51,11 @@ export default defineConfig({
     target: 'esnext',
     chunkSizeWarningLimit: 1000,
 
+    modulePreload: {
+      resolveDependencies(filename, deps) {
+        return deps.filter(dep => !dep.endsWith('.js'))
+      }
+    },
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
@@ -58,6 +64,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            if (id.includes('@element-plus/icons-vue')) return 'element-plus-icons'
             if (id.includes('element-plus')) return 'element-plus'
             if (id.includes('axios')) return 'axios'
             if (id.includes('vue-office')) return 'vue-office' // ✅ 拆出 vue-office

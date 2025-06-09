@@ -20,12 +20,16 @@
 </template>
 
 <script setup>
-import * as ElementPlusIconsVue from "@element-plus/icons-vue"; // 引入所有 Element Plus 图标
+import { Folder, House, Document} from "@element-plus/icons-vue";
 
 defineProps({
   menu: Object,
 });
 
 // 存储图标
-const icons = ElementPlusIconsVue;
+const icons = {
+  House,
+  Document,
+  Folder
+}
 </script>

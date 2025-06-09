@@ -33,6 +33,7 @@ import { useRoute } from 'vue-router';
 import {Expand, Fold} from '@element-plus/icons-vue';
 import * as userService from '@/api/modules/user.js'
 import MenuItem from './components/MenuItem.vue';
+import {loadDynamicRoutes} from "@/router/index.js";
 const route = useRoute();
 const activeMenu = ref(route.path);
 const isCollapsed = ref(true);
@@ -48,6 +49,7 @@ onMounted(async () => {
   try {
     const respMenu = await userService.getLinks();
     menuData.value = respMenu;
+    await loadDynamicRoutes(respMenu)
   } catch (error) {
     console.error('Failed to load links:', error);
   }

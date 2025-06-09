@@ -32,9 +32,9 @@
               {{ item.summary }}
             </div>
             <div>
-              <router-link :to="item.path" class="el-link">
+              <div class="el-link" @click="goToDetail(item.path)" style="cursor: pointer;">
                 阅读全文 <el-icon><DArrowRight /></el-icon>
-              </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -55,13 +55,20 @@
 
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue'
+import { DArrowRight } from '@element-plus/icons-vue'
 import type { CollapseModelValue } from 'element-plus'
 import api from '@/api/index.js';
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+function goToDetail(path) {
+  router.push(path)
+}
 
 let param = ref({
   searchKey: '',
   pageNum: 1,
-  pageSize: 15,
+  pageSize: 10,
   current: 1,
   total: 0,
   records: []
