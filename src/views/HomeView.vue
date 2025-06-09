@@ -25,7 +25,7 @@
         </template>
         <div style="display: flex; align-items: flex-start;">
           <div>
-            <el-image src="images/1871381602471264271.png" style="width: 125px;flex-shrink: 0;" />
+            <el-image :src="item.cover" style="width: 125px;flex-shrink: 0;" />
           </div>
           <div style="display: flex;flex-direction: column;justify-content: space-between; padding-left: 20px">
             <div style="height: 110px;overflow: hidden;">
