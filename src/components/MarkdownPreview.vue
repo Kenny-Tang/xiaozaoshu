@@ -4,7 +4,6 @@
       <div v-html="innerHtml"></div>
     </div>
     <div class="toc">
-      <h3>文档目录</h3>
       <ul>
         <li v-for="(item, index) in toc" :key="index" :style="{ marginLeft: (item.level - 1) * 15 + 'px' }">
           <a :href="'#' + item.id">{{ item.title }}</a>
@@ -16,7 +15,9 @@
 
 <script>
 import MarkdownIt from "markdown-it";
+import frontMatter from "markdown-it-front-matter";
 import ClipboardJS from "clipboard";
+import jsYaml from "js-yaml"; // 引入 js-yaml
 import plantumlEncoder from "plantuml-encoder";
 import markdownItMathjax from "markdown-it-mathjax3";
 
@@ -29,11 +30,14 @@ export default {
   },
   data() {
     return {
+      metadata: {}, // 存放解析的 YAML 数据
       md: new MarkdownIt({
         html: true,
         breaks: true,
         typographer: true,
         linkify: true,
+      }).use(frontMatter, (fm) => {
+        this.metadata = this.parseYaml(fm);
       }).use(markdownItMathjax),
       toc: [] // 存放目录项
     };
@@ -41,7 +45,6 @@ export default {
   computed: {
     innerHtml() {
       const html = this.md.render(this.content);
-      // this.generateTOC();  // 在渲染内容时生成目录
       return html;
     }
   },
@@ -91,8 +94,16 @@ export default {
             console.error("复制失败！");
           });
         }
-       
+
       });
+    },
+    parseYaml(fm) {
+      try {
+        return jsYaml.load(fm); // 解析目录
+      } catch (e) {
+        console.error("YAML 解析失败:", e);
+        return {};
+      }
     },
     generateTOC() {
       const headings = document.querySelectorAll('.content h1, .content h2, .content h3, .content h4, .content h5, .content h6');
