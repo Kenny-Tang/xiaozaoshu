@@ -1,9 +1,9 @@
 
 <script lang="ts" setup>
-import {onMounted, ref, nextTick} from "vue";
+import {onMounted, ref, nextTick, computed} from "vue";
 import api from '@/api/index.js';
 import EditArticle from "@/admin/components/EditArticle.vue";
-import { ElMessage } from 'element-plus';
+import {Edit} from '@element-plus/icons-vue';
 
 const editId = ref('')
 const dialogControl = ref({
@@ -12,6 +12,15 @@ const dialogControl = ref({
   articleId: '',
   editKey: 0
 })
+let columnList = ref<{ id: string; title: string }[]>([]); // 专栏列表
+// 构建 columnId => columnTitle 的映射表
+const columnMap = computed(() => {
+  const map = new Map<string, string>();
+  columnList.value.forEach(col => {
+    map.set(col.id, col.title);
+  });
+  return map;
+});
 const tableData = ref([]);
 
 const editArticle = async (newId: string) => {
@@ -33,10 +42,26 @@ const  queryHomeArticleList = () => {
   api.blog.getHomeArticleList(param.value).then((res: any) => {
     param.value.total = res.total
     param.value.current = res.current
-    tableData.value = res.records
+    tableData.value = res.records.map((article: any) => {
+      return {
+        id: article.id,
+        title: article.title,
+        url: article.url,
+        path: article.path,
+        updateTime: article.updateTime,
+        summary: article.summary,
+        displayOrder: article.displayOrder || 1,
+        columnName: columnMap.value.get(article.columnId) || '默认专栏',
+      };
+    });
   })
 }
 onMounted(() => {
+  api.blog.getColumnInfoList().then(res => {
+    columnList.value = res;
+  }).catch(err => {
+    console.error('获取专栏列表失败', err)
+  })
   queryHomeArticleList();
 });
 
@@ -82,18 +107,18 @@ const handleDialogClose = () => {
       <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="id" label="ID" width="120" />
         <el-table-column prop="title" label="标题" width="120" />
-        <el-table-column prop="displayOrder" label="展示顺序" width="60" />
-
-        <el-table-column prop="url" label="URL" width="120" />
+        <el-table-column prop="columnName" label="标题" width="120" />
+        <el-table-column prop="displayOrder" label="展示顺序" width="80" align="center" />
         <el-table-column prop="path" label="Router" width="120" />
-        <el-table-column prop="summary" label="文章简介" width="600" />
-        <el-table-column fixed="right" label="" width="120" show-overflow-tooltip>
+        <el-table-column prop="url" label="URL" width="120" />
+        <el-table-column prop="updateTime" label="更新时间" width="120" />
+        <el-table-column prop="summary" label="文章简介" width="700" />
+        <el-table-column fixed="right" label="" width="120">
           <template #default="scope">
             <el-button link type="primary" size="small">
               Detail
             </el-button>
-            <el-button link type="primary" size="small" @click="editArticle(scope.row.id)">
-              Edit
+            <el-button type="primary" :icon="Edit" @click="editArticle(scope.row.id)" circle>
             </el-button>
           </template>
         </el-table-column>
@@ -125,7 +150,7 @@ const handleDialogClose = () => {
 
 <style scoped>
 .dashboard {
-  padding: 0 20px;
+  padding: 0 30px;
 }
 .custom-search {
   display: flex; justify-content: right;

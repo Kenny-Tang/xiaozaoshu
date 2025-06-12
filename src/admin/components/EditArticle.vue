@@ -34,7 +34,11 @@ onMounted(() => {
     }).catch(err => {
       console.error('获取专栏列表失败', err)
     })
-    loadArticle(props.articleId);
+    if (props.articleId) {
+      loadArticle(props.articleId);
+    } else {
+      console.log('新建文章');
+    }
   });
 });
 
