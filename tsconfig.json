@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                         // 输出为现代 JS
+    "module": "ESNext",                         // 模块系统
+    "moduleResolution": "Node",                 // 按 Node 风格解析模块
+    "lib": ["DOM", "ESNext"],                   // 支持 Promise 等现代 API
+    "allowJs": true,                            // ✅ 支持编译 JS 文件（如 src/main.js）
+    "checkJs": false,                           // ⛔ 不对 JS 进行类型检查（可改为 true）
+    "jsx": "preserve",
+    "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "useDefineForClassFields": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src", "vite.config.js"],
+  "exclude": ["node_modules", "dist"]
+}
