@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import * as blog from "@/api/modules/blog.js";
 
 const routes = [
-  { path: '/about', name: 'Vue Anki', component: () => import('../views/AboutView.vue') },
+  { path: '/about', name: 'Vue Anki', component: () => import('../views/BasicEditor.vue') },
+  { path: '/editor', name: 'TinyMCE', component: () => import('../views/BasicEditor.vue') },
 ];
 
 const router = createRouter({
@@ -42,7 +43,7 @@ export async function loadDynamicRoutes() {
   try {
     const mdLinks = await blog.getLinks();
     addRoutesRecursively(mdLinks);
-    // console.log('✅ 动态路由已加载:', router.getRoutes());
+    console.log('✅ 动态路由已加载:', router.getRoutes());
   } catch (error) {
     console.error('❌ 加载动态路由失败:', error);
   }

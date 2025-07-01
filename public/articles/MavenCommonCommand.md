@@ -93,3 +93,51 @@ mvn project-info-reports:dependencies
 输出位置：
 
 报告会生成在 target/site/dependencies.html 中，可以通过浏览器查看。
+
+你可以使用 `mvn` 命令 **精确地执行指定的单元测试类或方法**，格式如下：
+
+---
+##  单元测试
+
+###  执行指定的测试类
+
+```bash
+mvn -Dtest=类名 test
+```
+
+**示例：**
+
+```bash
+mvn -Dtest=ZtbPdfMergeServiceTest test
+```
+
+执行多个测试类（逗号分隔）
+
+```bash
+mvn -Dtest=TestClass1,TestClass2 test
+```
+---
+
+###  执行指定的测试方法（单个方法）
+
+```bash
+mvn -Dtest=类名#方法名 test
+```
+
+**示例：**
+
+```bash
+mvn -Dtest=ZtbPdfMergeServiceTest#testMergePdf test
+```
+
+---
+
+###  使用通配符
+
+```bash
+mvn -Dtest=*Merge* test
+```
+
+这个会匹配所有类名中包含 `Merge` 的测试类。
+
+---

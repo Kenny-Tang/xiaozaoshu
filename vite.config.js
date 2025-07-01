@@ -72,6 +72,17 @@ export default defineConfig({
             if (id.includes('highlight')) return 'highlight';  // 新增拆包
             if (id.includes('vue')) return 'vue'
             if (id.includes('echarts')) return 'echarts'
+            if (id.includes('mathjax')) return 'mathjax'
+            // ✅ markdown-it 相关模块单独拆包
+            if (id.includes('markdown-it')) return 'markdown';
+            if (id.includes('js-yaml')) return 'markdown';
+            if (id.includes('plantuml-encoder')) return 'markdown';
+            if (id.includes('clipboard')) return 'markdown';
+            if (id.includes('parse5')) return 'parse5';
+            if (id.includes('fingerprintjs')) return 'fingerprintjs-htmlparser2';
+            if (id.includes('htmlparser2')) return 'fingerprintjs-htmlparser2';
+            if (id.includes('lodash-es')) return 'lodash-cheerio'
+            if (id.includes('cheerio')) return 'lodash-cheerio'
             return 'vendor'
           }
         },

@@ -68,7 +68,7 @@ function goToDetail(path) {
 let param = ref({
   searchKey: '',
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 9,
   current: 1,
   total: 0,
   records: []

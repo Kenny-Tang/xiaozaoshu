@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^4.6.2",
+    "@tinymce/tinymce-vue": "^6.2.0",
     "@vue-office/pdf": "^2.0.10",
     "@wangeditor/editor": "^5.1.23",
     "axios": "^1.7.9",
@@ -26,6 +27,7 @@
     "markdown-it-mathjax3": "^4.3.2",
     "marked": "^15.0.6",
     "plantuml-encoder": "^1.4.0",
+    "tinymce": "^7.9.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
