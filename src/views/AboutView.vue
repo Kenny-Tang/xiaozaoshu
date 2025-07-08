@@ -49,33 +49,6 @@
 										<thead>
 											<tr><th>指令</th><th>描述</th></tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td><code>v-bind</code></td>
-												<td>用于将 Vue 实例的数据绑定到 HTML 元素的属性上。</td>
-											</tr>
-											<tr>
-												<td><code>v-if</code></td>
-												<td>用于根据表达式的值来条件性地渲染元素或组件。</td>
-											</tr>
-											<tr>
-												<td><code>v-show</code></td>
-												<td>v-show 是 Vue.js 提供的一种指令，用于根据表达式的值来条件性地显示或隐藏元素。</td>
-											</tr>
-											<tr>
-												<td><code>v-for</code></td>
-												<td>用于根据数组或对象的属性值来循环渲染元素或组件。</td>
-											</tr>
-										
-											<tr>
-												<td><code>v-on</code></td>
-												<td>用于在 HTML 元素上绑定事件监听器，使其能够触发 Vue 实例中的方法或函数。</td>
-											</tr>
-											<tr>
-												<td><code>v-model</code></td>
-												<td>用于在表单控件和 Vue 实例的数据之间创建双向数据绑定。</td>
-											</tr>
-										</tbody>
 									</table>'
 							/>
 							<Card
@@ -90,18 +63,6 @@
 								title="Vue 指令定义函数提供了7个钩子函数"
 								msg="<ol>
 												<li><p><strong>created </strong>: 在绑定元素的属性或事件监听器被应用之前调用。</p>
-												</li>
-												<li><p><strong>beforeMount </strong>: 指令第一次绑定到元素并且在挂载父组件之前调用。。</p>
-												</li>
-												<li><p><strong>mounted </strong>: 在绑定元素的父组件被挂载后调用。。</p>
-												</li>
-												<li><p><strong>beforeUpdate</strong>: 在更新包含组件的 VNode 之前调用。。</p>
-												</li>
-												<li><p><strong>updated</strong>: 在包含组件的 VNode 及其子组件的 VNode 更新后调用。</p>
-												</li>
-												<li><p><strong>beforeUnmount</strong>: 当指令与在绑定元素父组件卸载之前时，只调用一次。</p>
-												</li>
-												<li><p><strong>unmounted</strong>: 当指令与元素解除绑定且父组件已卸载时，只调用一次。</p>
 												</li>
 										</ol>"
 							></Card>
