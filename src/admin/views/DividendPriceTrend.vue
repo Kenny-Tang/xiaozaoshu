@@ -1,7 +1,10 @@
 <template>
   <div class="page-container">
     <div class="chart-wrapper">
-      <StockTrendChart :chart-data="chartData" title="Stock Price Trend" />
+      <StockTrendChart v-bind="dividendChartRef" />
+    </div>
+    <div class="chart-wrapper">
+      <StockTrendChart v-bind="priceChartRef" />
     </div>
   </div>
 </template>
@@ -11,12 +14,26 @@ import { ref, onMounted } from 'vue'
 import * as qmt from '@/api/modules/qmt.js'
 import StockTrendChart from '../components/StockTrendChart.vue'
 
-const chartData = ref([])
+const priceData = ref([])
+const priceChartRef = ref({
+  chartData: [],
+  title: 'Stock Price Trend',
+  yAxisName: 'StockPrice'
+})
+const dividendChartRef = ref({
+  chartData: [],
+  title: 'Stock Dividend Trend',
+  xAxisName: 'Year',
+  yAxisName: 'DividendYield'
+})
 
 onMounted(async () => {
   try {
     const listDividends = await qmt.listDividends({})
-    chartData.value = listDividends
+
+    const listStockPriceTrend = await qmt.listStockPrices({})
+    dividendChartRef.value.chartData = listDividends;
+    priceChartRef.value.chartData = listStockPriceTrend
   } catch (err) {
     console.error('Error loading stock trend data:', err)
   }

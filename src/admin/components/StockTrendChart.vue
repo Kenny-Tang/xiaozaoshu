@@ -11,6 +11,14 @@ const props = defineProps({
   title: {
     type: String,
     default: 'Stock Trend'
+  },
+  xAxisName: {
+    type: String,
+    default: 'Date'
+  },
+  yAxisName: {
+    type: String,
+    default: 'Value'
   }
 })
 
@@ -23,9 +31,9 @@ const drawChart = () => {
 
   const grouped = {}
   props.chartData.forEach(item => {
-    const year = item.realYear ? String(item.realYear) : ''
-    const value = isNaN(item.dividendDistribution) ? 0 : item.dividendDistribution
-    var stockCode = item.stockCode;
+    const year = item.x ? String(item.x) : ''
+    const value = isNaN(item.v) ? 0 : item.v
+    var stockCode = item.stockName;
     if (!grouped[stockCode]) grouped[stockCode] = []
     grouped[stockCode].push([year, value])
   })
@@ -39,12 +47,45 @@ const drawChart = () => {
     selected[stockCodes[0]] = true // 让第一个股票代码的折线默认显示
   }
 
-  const series = Object.entries(grouped).map(([name, data]) => ({
-    name,
-    type: 'line',
-    data: data.sort((a, b) => a[0].localeCompare(b[0])),
-    smooth: true
-  }))
+  const series = Object.entries(grouped).map(([name, data]) => {
+    const sortedData = data.sort((a, b) => a[0].localeCompare(b[0]))
+    const values = sortedData.map(item => item[1])
+
+    // 计算均值
+    const average = values.reduce((a, b) => a + b, 0) / values.length
+
+    // 计算中位数
+    const median = (() => {
+      const sorted = [...values].sort((a, b) => a - b)
+      const mid = Math.floor(sorted.length / 2)
+      return sorted.length % 2 === 0
+          ? (sorted[mid - 1] + sorted[mid]) / 2
+          : sorted[mid]
+    })()
+
+    return {
+      name,
+      type: 'line',
+      data: sortedData,
+      smooth: true,
+      markLine: {
+        symbol: 'none',
+        lineStyle: {
+          type: 'dashed',
+          color: 'red'
+        },
+        label: {
+          formatter: (params) => params.name,
+          position: 'end'
+        },
+        data: [
+          { name: 'Average', yAxis: average },
+          { name: 'Median', yAxis: median }
+        ]
+      }
+    }
+  })
+
 
   chartInstance.setOption({
     title: {
@@ -67,15 +108,18 @@ const drawChart = () => {
     },
     xAxis: {
       type: 'category',
-      name: 'Dividend Year',
+      name: props.xAxisName,
+      axisLabel: {
+        rotate: 90  // 🔁 标签旋转角度（单位：度）
+      },
       axisLine: {
-        show: true, // 显示 Y 轴线
+        show: true,
         symbol: ['none', 'arrow'],
         symbolSize: [10, 15]}
     },
     yAxis: {
       type: 'value',
-      name: 'Dividend Amount' ,
+      name: props.yAxisName ,
       axisLine: {
         show: true, // 显示 Y 轴线
         symbol: ['none', 'arrow'],

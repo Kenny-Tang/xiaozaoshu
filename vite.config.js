@@ -33,12 +33,12 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8080/', // gateway
-        // target: 'http://127.0.0.1:8083/', // qmt-service
+        // target: 'http://127.0.0.1:8080/', // gateway
+        target: 'http://127.0.0.1:8083/', // qmt-service
         // target: 'http://127.0.0.1:8081/', // user-service
         // target: 'https://www.xiaozaoshu.top/',
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, ''), // 使用gateway访问时不需要重写路径
+        rewrite: (path) => path.replace(/^\/api/, ''), // 使用gateway访问时不需要重写路径
       },
     },
   },
@@ -74,6 +74,7 @@ export default defineConfig({
             if (id.includes('highlight')) return 'highlight';  // 新增拆包
             if (id.includes('vue')) return 'vue'
             if (id.includes('echarts')) return 'echarts'
+            if (id.includes('zrender')) return 'echarts'
             if (id.includes('mathjax')) return 'mathjax'
             // ✅ markdown-it 相关模块单独拆包
             if (id.includes('markdown-it')) return 'markdown';
@@ -85,6 +86,7 @@ export default defineConfig({
             if (id.includes('htmlparser2')) return 'fingerprintjs-htmlparser2';
             if (id.includes('lodash-es')) return 'lodash-cheerio'
             if (id.includes('cheerio')) return 'lodash-cheerio'
+            if (id.includes('tiny')) return 'tinymce'
             return 'vendor'
           }
         },

@@ -4,6 +4,8 @@ Python 中的魔术方法（Magic Methods），又叫“**双下方法（dunder 
 
 ---
 
+阅读原文 [https://www.xiaozaoshu.top/articles/python/maigc-method](https://www.xiaozaoshu.top/articles/python/maigc-method)
+
 ## 常用魔术方法详解
 
 最常见也最有用的几个魔术方法：
