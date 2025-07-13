@@ -30,6 +30,7 @@ export default defineConfig({
   ],
 
   server: {
+    host: true, // 等价于 host: '0.0.0.0'
     port: 3000,
     proxy: {
       '/api': {
@@ -86,7 +87,7 @@ export default defineConfig({
             if (id.includes('htmlparser2')) return 'fingerprintjs-htmlparser2';
             if (id.includes('lodash-es')) return 'lodash-cheerio'
             if (id.includes('cheerio')) return 'lodash-cheerio'
-            if (id.includes('tiny')) return 'tinymce'
+            if (id.includes('tinymce')) return 'tinymce'
             return 'vendor'
           }
         },

@@ -10,10 +10,10 @@ const resp = {
     }
   }
 }
- const {data: {list,pageInfo: {pageSize}}} = resp;
+const {data: {list,pageInfo: {pageSize}}} = resp;
 console.log(list);
 console.log(pageSize)
-
+console.log()
 </script>
 
 <template>
