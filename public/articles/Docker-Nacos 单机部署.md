@@ -4,7 +4,7 @@ Docker 安装 Nacos 是一种常见的部署方式，适合快速搭建开发或
 
 ## 🐳 Docker 安装 Nacos（单机模式）
 
-### ✅ 前提条件
+### 前提条件
 
 * 已安装 Docker 和 Docker Compose（可选但推荐）
 * 需要 MySQL 数据库（可选，如果不使用嵌入式数据库）
@@ -65,14 +65,6 @@ docker-compose up -d
 
 ---
 
-### 📌 默认控制台信息
-
-* 控制台地址：[http://localhost:8848/nacos/](http://localhost:8848/nacos/)
-* 用户名：`nacos`
-* 密码：`nacos`
-
----
-
 ### 📎 相关端口说明
 
 | 端口        | 用途         |
@@ -92,7 +84,7 @@ docker-compose up -d
 
 ## 🧭 Nacos 健康检查方式
 
-### 🔹 1. 查看容器运行状态
+### 1. 查看容器运行状态
 
 ```bash
 docker ps
@@ -102,7 +94,7 @@ docker ps
 
 ---
 
-### 🔹 2. 检查首页是否正常响应（简单有效）
+### 2. 检查首页是否正常响应（简单有效）
 
 ```bash
 curl -I http://localhost:8848/nacos/
@@ -136,7 +128,7 @@ fi
 
 ---
 
-### 🔹 3. 检查 Nacos 注册服务接口（进阶）
+### 3. 检查 Nacos 注册服务接口（进阶）
 
 如果你部署了服务，可以通过 API 查询注册服务列表：
 
@@ -148,7 +140,7 @@ curl -s "http://localhost:8848/nacos/v1/ns/service/list?pageNo=1&pageSize=10"
 
 ---
 
-### 🔹 4. 使用 Nacos 自带的 Prometheus 健康接口（1.x 没有）
+### 4. 使用 Nacos 自带的 Prometheus 健康接口（1.x 没有）
 
 如果你用的是 **Nacos 2.x 版本并开启了监控模块**，可能存在 `/actuator/health`：
 
@@ -159,6 +151,52 @@ curl http://localhost:8848/nacos/actuator/health
 ```
 {"status":"UP"}
 ```
+
+
+## Add Authentication
+使用 `Docker` 安装 `Nacos` 默认是不带权限校验的，下面我们将配置认证功能
+
+Nacos 是使用SpringBoot启动的，需要修改SpringBoot的启动文件，文件在镜像中的位置如下：
+
+> /home/nacos/conf/application.properties
+
+这里有两种方式处理
+1. 挂载一个外部文件，启动容器
+2. 使用新的配置文件，重新创建一个镜像
+
+本次采用的是第二种方式
+
+- **application.properties**
+```editorconfig
+# Basic auth config
+nacos.core.auth.enabled=true
+nacos.core.auth.system.type=nacos
+
+# JWT key (Base64 and length > 32) 
+nacos.core.auth.plugin.nacos.token.secret.key=YkZ3ZWpRYWZXanRUd1BqRXo2bU52S1ZMN3EwM0dVblE=
+nacos.core.auth.default.token.expire.seconds=18000
+
+# Default user
+nacos.core.auth.user.nacos.password=your_own_password
+nacos.core.auth.user.nacos.role=ROLE_ADMIN
+
+# Server identity (for UI auth)
+nacos.core.auth.server.identity.key=serverIdentity
+nacos.core.auth.server.identity.value=localDev
+```
+
+- **Dockerfile**
+
+```dockerfile
+FROM nacos/nacos-server:v2.5.1
+
+# 覆盖官方的 application.properties
+COPY application.properties /home/nacos/conf/application.properties
+
+```
+
+再次访问就需要使用密码登录了：
+http://127.0.0.1:18848/nacos/
 
 ## 通过NGINX代理控制台
 因为NGINX 和 Nacos 部署在同一台服务器上，且都是通过 Docker 部署的，这里我将服务部署同一个Docker 网络中。
@@ -191,23 +229,4 @@ docker run \
 -v /usr/local/nginx/html:/usr/share/nginx/html \
 -v /usr/local/nginx/certs:/etc/nginx/certs:ro \
 -d nginx:1.27.3-perl
-```
-
-## 项目启动
-
-### 启动 user-service
-```bash
-docker run --name user-service \
-  --network docker-backend-network \
-  -p 8081:8081 \
-  --restart unless-stopped \
-  user-service:0.1
-```
-### 启动 api-gateway
-```bash
-docker run --name api-gateway \
-  --network docker-backend-network \
-  -p 8080:8080 \
-  --restart unless-stopped \
-  api-gateway:0.1
 ```

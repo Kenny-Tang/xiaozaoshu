@@ -19,6 +19,10 @@ const props = defineProps({
   yAxisName: {
     type: String,
     default: 'Value'
+  },
+  yAxisMin: {
+    type: Number,
+    default: 0
   }
 })
 
@@ -40,9 +44,10 @@ const drawChart = () => {
 
   const selected = {}
   const stockCodes = Object.keys(grouped)
-  stockCodes.forEach(code => {
-    selected[code] = false
-  })
+  // stockCodes.forEach(code => {
+  //   // 初始化所有股票代码的折线为不显示状态
+  //   selected[code] = false
+  // })
   if (stockCodes.length > 0) {
     selected[stockCodes[0]] = true // 让第一个股票代码的折线默认显示
   }
@@ -52,11 +57,12 @@ const drawChart = () => {
     const values = sortedData.map(item => item[1])
 
     // 计算均值
-    const average = values.reduce((a, b) => a + b, 0) / values.length
+    // const average = values.map(Number).reduce((a, b) => a + b, 0) / values.length
 
     // 计算中位数
     const median = (() => {
-      const sorted = [...values].sort((a, b) => a - b)
+      const numericValues = values.map(Number).filter(v => !isNaN(v))
+      const sorted = numericValues.sort((a, b) => a - b)
       const mid = Math.floor(sorted.length / 2)
       return sorted.length % 2 === 0
           ? (sorted[mid - 1] + sorted[mid]) / 2
@@ -79,7 +85,7 @@ const drawChart = () => {
           position: 'end'
         },
         data: [
-          { name: 'Average', yAxis: average },
+          // { name: 'Average', yAxis: average },
           { name: 'Median', yAxis: median }
         ]
       }
@@ -119,6 +125,7 @@ const drawChart = () => {
     },
     yAxis: {
       type: 'value',
+      min: props.yAxisMin ,// 👈 设置 y 轴起始值为 20
       name: props.yAxisName ,
       axisLine: {
         show: true, // 显示 Y 轴线

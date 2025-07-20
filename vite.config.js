@@ -33,13 +33,17 @@ export default defineConfig({
     host: true, // 等价于 host: '0.0.0.0'
     port: 3000,
     proxy: {
+      // '/api': {
+      //   // target: 'http://127.0.0.1:8080/', // gateway
+      //   target: 'http://127.0.0.1:8083/', // qmt-service
+      //   // target: 'http://127.0.0.1:8081/', // user-service
+      //   // target: 'https://www.xiaozaoshu.top/',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/api/, ''), // 使用gateway访问时不需要重写路径
+      // },
       '/api': {
-        // target: 'http://127.0.0.1:8080/', // gateway
-        target: 'http://127.0.0.1:8083/', // qmt-service
-        // target: 'http://127.0.0.1:8081/', // user-service
-        // target: 'https://www.xiaozaoshu.top/',
+        target: 'https://www.xiaozaoshu.top/',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''), // 使用gateway访问时不需要重写路径
       },
     },
   },
