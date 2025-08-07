@@ -45,6 +45,14 @@ export default defineConfig({
         target: 'https://www.xiaozaoshu.top/',
         changeOrigin: true,
       },
+      // '/api': {
+      //   target: 'http://www.xiaozaoshu.com/',
+      //   changeOrigin: true,
+      // },
+      // '/api': {
+      //   target: 'http://127.0.0.1:9314',
+      //   changeOrigin: true,
+      // },
     },
   },
 

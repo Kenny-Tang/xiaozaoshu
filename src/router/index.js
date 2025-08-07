@@ -4,6 +4,7 @@ import * as blog from "@/api/modules/blog.js";
 const routes = [
   { path: '/about', name: 'Vue Anki', component: () => import('../views/BasicEditor.vue') },
   { path: '/editor', name: 'TinyMCE', component: () => import('../views/BasicEditor.vue') },
+  { path: '/wangeditor', name: 'WangEditor', component: () => import('../views/WangEditor.vue') },
   { path: '/test', name: 'Test', component: () => import('../views/Test.vue')},
 ];
 

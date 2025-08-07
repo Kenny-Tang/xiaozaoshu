@@ -50,7 +50,6 @@ docker compose version
 version: "3.9"  # 指定Compose文件的语法版本
 
 services:
-  # docker run -d --name redis -p 16379:6379 redis:7.2   redis-server --requirepass 1234@qwer
   redis:
     image: redis:7.2
     container_name: xiaozaoshu-redis
@@ -103,6 +102,52 @@ Compose 文件的版本取决于你所使用的：
 ***建议***
 * **如果你使用的是 Docker Compose V2**（大多数用户），可以 **省略 `version`**。
 * 如果你需要保持兼容性（比如部署在服务器上），建议使用 `version: "3.9"`。
+
+**depends_on**
+---
+`depends_on` 的语法格式
+
+```yaml
+depends_on:
+  - service1
+  - service2
+```
+
+1. 表示：当前服务在启动之前，**必须先启动所依赖的服务容器**(service1, service2)。 
+2. 但这并不意味着 `service1` 和 `service1` 服务已经“就绪”或“可用”！
+
+`depends_on` **只控制容器的启动顺序**，**不会等待依赖服务“可用”或“健康”**：
+
+* 它不检查数据库是否初始化完成
+* 不判断端口是否监听成功
+* 不检查健康状态（除非配合 `healthcheck`）
+
+
+* 推荐组合用法：`depends_on` + `healthcheck` + 自定义延迟
+
+为了确保服务真正就绪，推荐使用：
+
+| 项目                      | 示例            |
+| ----------------------- | ------------- |
+| ✅ depends\_on           | 控制容器启动顺序      |
+| ✅ healthcheck           | 设置服务就绪判定条件    |
+| ✅ entrypoint/startup 脚本 | 延迟启动 / 等待端口探测 |
+
+
+* 实用补充：常见健康检查方式
+
+```yaml
+services:
+  db:
+    image: mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+```
+
+然后 web 服务通过 `wait-for-it.sh` 或 `sleep` 等方式延迟启动。
 
 ---
 
