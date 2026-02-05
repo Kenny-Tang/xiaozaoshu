@@ -1,6 +1,6 @@
 # 国产数据库驱动Bug修复记录
 
-## 项目背景
+## 问题背景
 
 项目为传统行业项目，使用 SpringBoot 进行开发，数据库为 MySQL，数据库持久层框架使用 MyBatis。由于是国企项目，会受到一些限制：数据库和应用之间不能直接通信，需要通过一个隔离装置进行隔离。该装置会对发送到数据库的 SQL 进行审计。
 
@@ -8,7 +8,7 @@
 
 隔离装置实际上是做了一个代理，使用隔离装置后不能使用通用的数据库驱动，只能使用隔离装置厂商提供的数据库驱动。
 
-## 遇到的问题
+## 遇到的问题 
 
 驱动是国产厂商提供的，在实际使用中遇到了以下两个严重的问题。
 
@@ -81,7 +81,7 @@ try {
 
 现在的问题是，当使用 MyBatis 进行插入操作时，MyBatis 内部是如何获取自增 ID 的？
 
-通过源码分析（可参见 [MyBatis SELECT 执行过程](./mybatis_select_execution_process.md) 和 [MyBatis INSERT 执行过程](./mybatis_insert_execution_process.md)），发现 SQL 最终在 `PreparedStatementHandler` 的 `update` 方法中被执行：
+通过源码分析（可参见 [MyBatis SELECT 执行过程](./mybatis-select) 和 [MyBatis INSERT 执行过程](./mybatis-insert)），发现 SQL 最终在 `PreparedStatementHandler` 的 `update` 方法中被执行：
 
 ```java
 @Override
