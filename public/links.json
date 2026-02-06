@@ -6,9 +6,15 @@
 		"component": "MdViewer" ,
 		"icon": "House"
 	},{
-		"name": "链路追踪及指标监控",
+	"name": "Java开发手册(黄山版)",
+	"path": "/articles/alibaba-java-dev-guide",
+	"url": "/articles/Java开发手册(黄山版).pdf",
+	"icon": "Document",
+	"component": "PdfViewer"
+},{
+		"name": "山西系统改造.md",
 		"path": "/articles/tracing-and-metrics",
-		"url": "/articles/Tracing & Metrics.md",
+		"url": "/articles/山西系统改造.md",
 		"icon": "Document",
 		"component": "MdViewer"
 	},
