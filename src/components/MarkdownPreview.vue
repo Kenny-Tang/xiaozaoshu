@@ -21,7 +21,8 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
 import ClipboardJS from "clipboard";
 import jsYaml from "js-yaml";
-import encode from "plantuml-encoder"; // 需要安装: npm install plantuml-encoder
+import encode from "plantuml-encoder";
+import mermaid from "mermaid"; // 引入 mermaid
 
 export default {
   name: "MarkdownPreview",
@@ -40,22 +41,31 @@ export default {
       }
     });
 
-    // 自定义 fence 渲染规则，拦截 plantuml 代码块
+    // 自定义 fence 渲染规则，拦截 plantuml 和 mermaid 代码块
     const defaultFence = md.renderer.rules.fence.bind(md.renderer.rules);
     md.renderer.rules.fence = (tokens, idx, options, env, self) => {
       const token = tokens[idx];
       const lang = token.info.trim().toLowerCase();
 
-      // 检测 plantuml 代码块
+      // 检测 PlantUML 代码块
       if (lang === 'plantuml' || lang === 'puml') {
         const plantUmlCode = token.content;
         const encoded = encode.encode(plantUmlCode);
-
-        // 生成 PlantUML 图片 URL (使用官方服务器)
         const imageUrl = `https://www.plantuml.com/plantuml/svg/${encoded}`;
 
         return `<div class="uml-diagram">
           <img src="${imageUrl}" alt="PlantUML Diagram" loading="lazy" />
+        </div>`;
+      }
+
+      // 检测 Mermaid 代码块
+      if (lang === 'mermaid') {
+        const mermaidCode = token.content;
+        // 生成唯一 ID
+        const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+
+        return `<div class="mermaid-diagram" data-mermaid-id="${id}">
+          <pre class="mermaid-code">${this.escapeHtml(mermaidCode)}</pre>
         </div>`;
       }
 
@@ -72,7 +82,8 @@ export default {
       metadata: {},
       md: md,
       toc: [],
-      clipboardInstances: [] // 存储所有 clipboard 实例，便于清理
+      clipboardInstances: [],
+      mermaidInitialized: false
     };
   },
   computed: {
@@ -82,9 +93,11 @@ export default {
     }
   },
   mounted() {
+    this.initMermaid();
     this.$nextTick(() => {
       this.generateTOC();
       this.addCopyButton();
+      this.renderMermaid();
     });
   },
   watch: {
@@ -92,6 +105,7 @@ export default {
       this.$nextTick(() => {
         this.generateTOC();
         this.addCopyButton();
+        this.renderMermaid();
       });
     }
   },
@@ -103,6 +117,74 @@ export default {
     this.clipboardInstances = [];
   },
   methods: {
+    // 初始化 Mermaid 配置
+    initMermaid() {
+      if (this.mermaidInitialized) return;
+
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+          curve: 'basis'
+        },
+        sequence: {
+          useMaxWidth: true
+        },
+        gantt: {
+          useMaxWidth: true
+        }
+      });
+
+      this.mermaidInitialized = true;
+    },
+
+    // 渲染所有 Mermaid 图表
+    async renderMermaid() {
+      const mermaidDiagrams = this.$refs.contentRef?.querySelectorAll('.mermaid-diagram') || [];
+
+      for (const diagram of mermaidDiagrams) {
+        const id = diagram.getAttribute('data-mermaid-id');
+        const codeElement = diagram.querySelector('.mermaid-code');
+
+        if (!codeElement) continue;
+
+        const mermaidCode = codeElement.textContent;
+
+        try {
+          // 渲染 Mermaid 图表
+          const { svg } = await mermaid.render(id, mermaidCode);
+
+          // 替换内容
+          diagram.innerHTML = `<div class="mermaid-rendered">${svg}</div>`;
+        } catch (error) {
+          console.error('Mermaid 渲染失败:', error);
+          diagram.innerHTML = `<div class="mermaid-error">
+            <p>❌ Mermaid 图表渲染失败</p>
+            <pre>${this.escapeHtml(error.message)}</pre>
+            <details>
+              <summary>查看源码</summary>
+              <pre>${this.escapeHtml(mermaidCode)}</pre>
+            </details>
+          </div>`;
+        }
+      }
+    },
+
+    // HTML 转义
+    escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, m => map[m]);
+    },
+
     addCopyButton() {
       // 先清理旧的 clipboard 实例
       this.clipboardInstances.forEach(clipboard => {
@@ -115,8 +197,8 @@ export default {
       codeBlocks.forEach((block) => {
         const pre = block.parentElement;
 
-        // 跳过 UML 图表的代码块
-        if (pre.closest('.uml-diagram')) return;
+        // 跳过 UML 图表和 Mermaid 的代码块
+        if (pre.closest('.uml-diagram') || pre.closest('.mermaid-diagram')) return;
 
         // 避免重复添加按钮
         if (pre.querySelector('.copy-btn')) return;
@@ -287,6 +369,65 @@ pre {
   height: auto;
   display: inline-block;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mermaid 图表样式 */
+.mermaid-diagram {
+  margin: 20px 0;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  overflow-x: auto;
+}
+
+.mermaid-code {
+  display: none; /* 隐藏原始代码 */
+}
+
+.mermaid-rendered {
+  text-align: center;
+}
+
+.mermaid-rendered svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mermaid 错误提示样式 */
+.mermaid-error {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 5px;
+  padding: 15px;
+  color: #856404;
+}
+
+.mermaid-error p {
+  margin: 0 0 10px 0;
+  font-weight: bold;
+}
+
+.mermaid-error pre {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 12px;
+}
+
+.mermaid-error details {
+  margin-top: 10px;
+}
+
+.mermaid-error summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: #0077cc;
+}
+
+.mermaid-error summary:hover {
+  text-decoration: underline;
 }
 
 img {

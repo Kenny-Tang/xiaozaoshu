@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mdit/plugin-plantuml": "^0.23.1",
+    "@vue-office/pdf": "^2.0.10",
     "axios": "^1.7.9",
     "clipboard": "^2.0.11",
     "element-plus": "^2.9.4",
@@ -21,6 +22,7 @@
     "markdown-it-front-matter": "^0.2.4",
     "markdown-it-plantuml": "^1.4.1",
     "marked": "^15.0.6",
+    "mermaid": "^11.12.2",
     "pako": "^2.1.0",
     "plantuml-encoder": "^1.4.0",
     "vue": "^3.5.13",
