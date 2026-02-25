@@ -24,6 +24,12 @@ import jsYaml from "js-yaml";
 import encode from "plantuml-encoder";
 import mermaid from "mermaid"; // 引入 mermaid
 
+// HTML 转义
+function escapeHtml(text) {
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
 export default {
   name: "MarkdownPreview",
   props: {
@@ -65,7 +71,7 @@ export default {
         const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
 
         return `<div class="mermaid-diagram" data-mermaid-id="${id}">
-          <pre class="mermaid-code">${this.escapeHtml(mermaidCode)}</pre>
+          <pre class="mermaid-code">${escapeHtml(mermaidCode)}</pre>
         </div>`;
       }
 
@@ -106,6 +112,8 @@ export default {
         this.generateTOC();
         this.addCopyButton();
         this.renderMermaid();
+        // ✅ 列表长时 nextTick 可能不够，加一层 setTimeout 兜底
+        setTimeout(() => this.renderMermaid(), 100);
       });
     }
   },
@@ -146,43 +154,33 @@ export default {
       const mermaidDiagrams = this.$refs.contentRef?.querySelectorAll('.mermaid-diagram') || [];
 
       for (const diagram of mermaidDiagrams) {
-        const id = diagram.getAttribute('data-mermaid-id');
-        const codeElement = diagram.querySelector('.mermaid-code');
+        // ✅ 关键：先清理 Mermaid 注入到 document.body 的残留 SVG 元素
+        const oldId = diagram.getAttribute('data-mermaid-id');
+        const orphanSvg = document.getElementById(oldId);
+        if (orphanSvg) orphanSvg.remove();
+        // ✅ 每次渲染前生成新 id，避免 "id already exists" 错误
+        const newId = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+        diagram.setAttribute('data-mermaid-id', newId);
 
+        const codeElement = diagram.querySelector('.mermaid-code');
         if (!codeElement) continue;
 
         const mermaidCode = codeElement.textContent;
-
         try {
-          // 渲染 Mermaid 图表
-          const { svg } = await mermaid.render(id, mermaidCode);
-
-          // 替换内容
+          const { svg } = await mermaid.render(newId, mermaidCode);
           diagram.innerHTML = `<div class="mermaid-rendered">${svg}</div>`;
         } catch (error) {
           console.error('Mermaid 渲染失败:', error);
           diagram.innerHTML = `<div class="mermaid-error">
             <p>❌ Mermaid 图表渲染失败</p>
-            <pre>${this.escapeHtml(error.message)}</pre>
+            <pre>${escapeHtml(error.message)}</pre>
             <details>
               <summary>查看源码</summary>
-              <pre>${this.escapeHtml(mermaidCode)}</pre>
+              <pre>${escapeHtml(mermaidCode)}</pre>
             </details>
           </div>`;
         }
       }
-    },
-
-    // HTML 转义
-    escapeHtml(text) {
-      const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
-      };
-      return text.replace(/[&<>"']/g, m => map[m]);
     },
 
     addCopyButton() {
