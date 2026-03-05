@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+/public/articles/山西系统改造.md
