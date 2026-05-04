@@ -1,0 +1,39 @@
+[
+	{ 
+		"path": "/",
+		"name": "首页", 
+		"url": "/articles/Home.md",
+		"component": "MdViewer" ,
+		"icon": "House"
+	},{
+		"name": "Java开发手册(黄山版)",
+		"path": "/articles/alibaba-java-dev-guide",
+		"url": "/articles/Java开发手册(黄山版).pdf",
+		"icon": "Document",
+		"component": "PdfViewer"
+	},{
+		"name": "研发及上线规范",
+		"path": "/articles/code-and-deploy",
+		"url": "/articles/CodeAndDeploy.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},{
+		"name": "基于雪花算法的ID生成器",
+		"path": "/articles/snowflake-id-gen",
+		"url": "/articles/SnowflakeId.md",
+		"icon": "Document",
+	  "component": "MdViewer"
+	}, {
+		"name": "Maven 常用命令",
+		"path": "/articles/maven-common-command",
+		"url": "/articles/MavenCommonCommand.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	},{
+		"name": "Maven 分不同的环境打包不同目录下的配置文件",
+		"path": "/articles/maven-separate-env-profile",
+		"url": "/articles/MavenSeparateEnvProfile.md",
+		"icon": "Document",
+		"component": "MdViewer"
+	}
+]

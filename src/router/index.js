@@ -14,10 +14,10 @@ const router = createRouter({
   routes
 });
 
-// 🚀 **动态加载 links.json 并添加到路由**
+// 🚀 **动态加载 links.txt 并添加到路由**
 export async function loadDynamicRoutes() {
   try {
-    const response = await axios.get('/links.json');
+    const response = await axios.get('/links.txt');
     const mdLinks = response.data;
 		var timestamp = Date.parse(new Date()); 
     mdLinks.forEach(link => {

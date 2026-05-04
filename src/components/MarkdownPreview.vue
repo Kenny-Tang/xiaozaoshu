@@ -133,9 +133,10 @@ export default {
         startOnLoad: false,
         theme: 'default',
         securityLevel: 'loose',
+        fontFamily: 'Arial, sans-serif',
         flowchart: {
           useMaxWidth: true,
-          htmlLabels: true,
+          htmlLabels: false,
           curve: 'basis'
         },
         sequence: {

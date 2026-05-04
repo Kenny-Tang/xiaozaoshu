@@ -52,7 +52,7 @@ watch(route, (newRoute) => {
 // 加载 JSON 菜单数据并更新路由
 onMounted(async () => {
   try {
-    const response = await fetch('/links.json'); // ✅ 从 public 目录加载
+    const response = await fetch('/links.txt'); // ✅ 从 public 目录加载
     links.value = await response.json();
   } catch (error) {
     console.error('Failed to load links:', error);
