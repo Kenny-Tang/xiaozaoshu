@@ -1,3 +1,7 @@
+if (!Object.hasOwn) {
+  Object.hasOwn = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
 import { createApp } from 'vue';
 import App from './App.vue';
 import ElementPlus from 'element-plus';

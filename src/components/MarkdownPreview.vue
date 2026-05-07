@@ -21,8 +21,7 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
 import ClipboardJS from "clipboard";
 import jsYaml from "js-yaml";
-import encode from "plantuml-encoder";
-import mermaid from "mermaid"; // 引入 mermaid
+import mermaid from "mermaid";
 
 // HTML 转义
 function escapeHtml(text) {
@@ -53,17 +52,6 @@ export default {
       const token = tokens[idx];
       const lang = token.info.trim().toLowerCase();
 
-      // 检测 PlantUML 代码块
-      if (lang === 'plantuml' || lang === 'puml') {
-        const plantUmlCode = token.content;
-        const encoded = encode.encode(plantUmlCode);
-        const imageUrl = `https://www.plantuml.com/plantuml/svg/${encoded}`;
-
-        return `<div class="uml-diagram">
-          <img src="${imageUrl}" alt="PlantUML Diagram" loading="lazy" />
-        </div>`;
-      }
-
       // 检测 Mermaid 代码块
       if (lang === 'mermaid') {
         const mermaidCode = token.content;
@@ -89,7 +77,8 @@ export default {
       md: md,
       toc: [],
       clipboardInstances: [],
-      mermaidInitialized: false
+      mermaidInitialized: false,
+      mermaidRendering: false
     };
   },
   computed: {
@@ -112,8 +101,6 @@ export default {
         this.generateTOC();
         this.addCopyButton();
         this.renderMermaid();
-        // ✅ 列表长时 nextTick 可能不够，加一层 setTimeout 兜底
-        setTimeout(() => this.renderMermaid(), 100);
       });
     }
   },
@@ -152,35 +139,37 @@ export default {
 
     // 渲染所有 Mermaid 图表
     async renderMermaid() {
-      const mermaidDiagrams = this.$refs.contentRef?.querySelectorAll('.mermaid-diagram') || [];
+      if (this.mermaidRendering) return;
+      this.mermaidRendering = true;
 
-      for (const diagram of mermaidDiagrams) {
-        // ✅ 关键：先清理 Mermaid 注入到 document.body 的残留 SVG 元素
-        const oldId = diagram.getAttribute('data-mermaid-id');
-        const orphanSvg = document.getElementById(oldId);
-        if (orphanSvg) orphanSvg.remove();
-        // ✅ 每次渲染前生成新 id，避免 "id already exists" 错误
-        const newId = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
-        diagram.setAttribute('data-mermaid-id', newId);
+      try {
+        const mermaidDiagrams = this.$refs.contentRef?.querySelectorAll('.mermaid-diagram') || [];
 
-        const codeElement = diagram.querySelector('.mermaid-code');
-        if (!codeElement) continue;
+        for (const diagram of mermaidDiagrams) {
+          const codeElement = diagram.querySelector('.mermaid-code');
+          if (!codeElement) continue;
 
-        const mermaidCode = codeElement.textContent;
-        try {
-          const { svg } = await mermaid.render(newId, mermaidCode);
-          diagram.innerHTML = `<div class="mermaid-rendered">${svg}</div>`;
-        } catch (error) {
-          console.error('Mermaid 渲染失败:', error);
-          diagram.innerHTML = `<div class="mermaid-error">
-            <p>❌ Mermaid 图表渲染失败</p>
-            <pre>${escapeHtml(error.message)}</pre>
-            <details>
-              <summary>查看源码</summary>
-              <pre>${escapeHtml(mermaidCode)}</pre>
-            </details>
-          </div>`;
+          const mermaidCode = codeElement.textContent;
+          const newId = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+          diagram.setAttribute('data-mermaid-id', newId);
+
+          try {
+            const { svg } = await mermaid.render(newId, mermaidCode, diagram);
+            diagram.innerHTML = `<div class="mermaid-rendered">${svg}</div>`;
+          } catch (error) {
+            console.error('Mermaid 渲染失败:', error);
+            diagram.innerHTML = `<div class="mermaid-error">
+              <p>❌ Mermaid 图表渲染失败</p>
+              <pre>${escapeHtml(error.message)}</pre>
+              <details>
+                <summary>查看源码</summary>
+                <pre>${escapeHtml(mermaidCode)}</pre>
+              </details>
+            </div>`;
+          }
         }
+      } finally {
+        this.mermaidRendering = false;
       }
     },
 
@@ -196,8 +185,8 @@ export default {
       codeBlocks.forEach((block) => {
         const pre = block.parentElement;
 
-        // 跳过 UML 图表和 Mermaid 的代码块
-        if (pre.closest('.uml-diagram') || pre.closest('.mermaid-diagram')) return;
+        // 跳过 Mermaid 的代码块
+        if (pre.closest('.mermaid-diagram')) return;
 
         // 避免重复添加按钮
         if (pre.querySelector('.copy-btn')) return;
@@ -351,23 +340,6 @@ pre {
 
 .copy-btn:hover {
   background-color: #45a049;
-}
-
-/* PlantUML 图表样式 */
-.uml-diagram {
-  text-align: center;
-  margin: 20px 0;
-  padding: 15px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-}
-
-.uml-diagram img {
-  max-width: 100%;
-  height: auto;
-  display: inline-block;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Mermaid 图表样式 */

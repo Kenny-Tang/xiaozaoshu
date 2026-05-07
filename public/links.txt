@@ -30,6 +30,12 @@
 		"icon": "Document",
 		"component": "MdViewer"
 	},{
+		"name": "需求3-商务合标功能",
+		"path": "/articles/docx-test",
+		"url": "/articles/需求3-商务合标功能v6(1).docx",
+		"icon": "Document",
+		"component": "DocxViewer"
+	},{
 		"name": "Maven 分不同的环境打包不同目录下的配置文件",
 		"path": "/articles/maven-separate-env-profile",
 		"url": "/articles/MavenSeparateEnvProfile.md",
